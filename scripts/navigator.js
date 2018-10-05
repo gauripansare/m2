@@ -364,19 +364,7 @@ var _Navigator = (function () {
                         {
                             showQuestion();
                         }
-                        if(_currentPageObject.pageId == "p2")
-                            setReader("titleheader");
-                        else
-                        {
-                            if($("body").hasClass("no-focus"))
-                            {
-                                setReader("titleheader");
-                            }
-                            else
-                            {
-                                 setReader("progressdiv");
-                            }
-                        }
+                        
                         $("#hintdiv").show();
                         if(_currentPageObject.hideHint !=undefined && _currentPageObject.hideHint)
                         {
@@ -388,7 +376,16 @@ var _Navigator = (function () {
                             }
                        
                         $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
-                        
+                        if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
+                            $('#footer-navigation').css('display', 'table');
+                        }
+                        if(_currentPageObject.pageId == "p2")
+                            $("#titleheader").focus();
+                        else
+                        {
+                            $("#progressdiv").focus();
+                           
+                        }
                         //$("h2.pageheading").focus();//change
                     });
                 })

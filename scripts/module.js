@@ -667,10 +667,7 @@ function enableobj(obj) {
 
 $(document).ready(function () {
     _Navigator.Start();   
-    //if (_Settings.enableCache) {
-    //    _Caching.InitAssetsCaching();
-    //    _Caching.InitPageCaching();
-    //}
+  
   
    $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
