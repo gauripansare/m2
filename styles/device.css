@@ -102,6 +102,9 @@
     .question-band{
         margin-left: 13%;
     }
+    .questioninnerwrapper{
+        padding-right: 7px;
+    }
 
 }
 

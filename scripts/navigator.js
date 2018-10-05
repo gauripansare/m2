@@ -353,9 +353,7 @@ var _Navigator = (function () {
             if (_currentPageObject.isStartPage) {
                 $(".main-content").load(pageUrl, function () {
                     OnPageLoad();                   
-                    setReader("header1");    
-                    
-
+                    setReader("header1");
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
@@ -370,14 +368,14 @@ var _Navigator = (function () {
                             setReader("titleheader");
                         else
                         {
-                            //if($("body").hasClass("no-focus"))
+                            if($("body").hasClass("no-focus"))
                             {
                                 setReader("titleheader");
                             }
-                            // else
-                            // {
-                            //     setReader("progressdiv");
-                            // }
+                            else
+                            {
+                                 setReader("progressdiv");
+                            }
                         }
                         $("#hintdiv").show();
                         if(_currentPageObject.hideHint !=undefined && _currentPageObject.hideHint)

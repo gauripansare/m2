@@ -68,15 +68,15 @@ var isFirstQAnswered = false
 function showQuestion(){
 	debugger;
 	//addCSS("styles/questionPlaceholder.css");
-	$(".question-band").empty();
- 	$(".intro-content-question").hide();
-	 currQustion = gRecordData.Questions[currentQuestionIndex]
-	 if(gRecordData.Status == "NotStarted"){
-		 gRecordData.Status = "Started";
-	 }
-	$("#QuetionText").html( "<span style='font-size:0px'>Question Number </span><span >" + (currentQuestionIndex + 1) + ") &nbsp;</span>" + currQustion.QuestionText)
-
-	if(currQustion.UserSelectedOptionId == ""){
+	$(".question-band fieldset").empty();
+	$(".question-band fieldset").append("<legend aria-label='Options'></legend>")
+	$(".intro-content-question").hide();
+	currQustion = gRecordData.Questions[currentQuestionIndex]
+	if (gRecordData.Status == "NotStarted") {
+		gRecordData.Status = "Started";
+	}
+	$("#QuetionText").html("<span style='font-size:0px'>Question Number </span><span >" + (currentQuestionIndex + 1) + ") &nbsp;</span>" + currQustion.QuestionText)
+	if (currQustion.UserSelectedOptionId == "") {
 		// randomize options
 		currQustion.Options = shuffle(currQustion.Options)
 	}
@@ -88,12 +88,14 @@ function showQuestion(){
 		optionObj = $(".Option").clone();
 		optionObj.attr("id", "label"+currQustion.Options[i].OptionId)
 		optionObj.find("input").attr("id", currQustion.Options[i].OptionId)
+		optionObj.find("input").attr("name", "radiobutton")
 		optionObj.find(".inpputtext").html(currQustion.Options[i].OptionText)
+		optionObj.find(".inpputtext").attr("for", currQustion.Options[i].OptionId)
 		optionObj.removeClass("Option")
 		optionObj.show();
-		$(".question-band").append(optionObj)
-		if(currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId){
-			$("#"+currQustion.Options[i].OptionId).trigger( "click" );
+		$(".question-band fieldset").append(optionObj)
+		if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
+			$("#" + currQustion.Options[i].OptionId).trigger("click");
 			$("#linknext").k_enable()
 			isFirstQAnswered = true
 		}
@@ -108,9 +110,9 @@ function showQuestion(){
 	
 	if(_Navigator.IsPresenterMode()){
 		showQuestionPresenterMode();
+		$("#linknext").k_enable()
 	}
-	if( gRecordData.Status == "Completed")
-	{
+	if (gRecordData.Status == "Completed") {
 		showUserReviewMode();
 	}
 	_Navigator.UpdateProgressBar();
@@ -174,52 +176,43 @@ function showSummary(){
 			// randomize options
 			currQustion.Options = shuffle(currQustion.Options)
 		}
-		questionObj.find("#question-band").empty();
+		questionObj.find("#question-band fieldset").empty();
+		questionObj.find("#question-band fieldset").append("<legend aria-label='Options'></legend>")
 		var feedbacktext = "";
-		for(var i=0; i < currQustion.Options.length; i++){
-			
+		for (var i = 0; i < currQustion.Options.length; i++) {
 			optionObj = $(".Option").clone();
-			optionObj.find("input").attr("id", "question"+gRecordData.Questions[b].QuestionId+currQustion.Options[i].OptionId)
+			optionObj.find("input").attr("id", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
+			optionObj.find("input").attr("name", "radiobutton")
 			optionObj.find(".inpputtext").html(currQustion.Options[i].OptionText)
+			optionObj.find(".inpputtext").attr("for", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 			optionObj.removeClass("Option");
-			optionObj.find("input").attr("name",radioname)
+			optionObj.find("input").attr("name", radioname)
 			optionObj.show();
-			
 			//questionObj.find(".question-band").append(optionObj)
-
-			 var iscorrectimg = optionObj.find(".iscorrect").find("img")
-
-			 if(currQustion.Options[i].IsCorrect){
-					iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
-					iscorrectimg.closest("span").show();
-					iscorrectimg.attr("aria-label","Correct option");
-					if(_Navigator.IsPresenterMode() ){
-						optionObj.find("input").prop("checked","true");
-					}
-			 }
-			if(currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId){
-				
-				 if( !currQustion.Options[i].IsCorrect){
-					iscorrectimg.attr("src","assets/images/incorrect-v1-1.png")
-					iscorrectimg.attr("aria-label","Incorrect option selected");
-					feedbacktext = currQustion.IncorrectFeedback;
-					
-					
-				 }
-				 else
-				 {
-					 iscorrectimg.attr("aria-label","Correct option selected");
-					 score ++;
-					 feedbacktext = currQustion.CorrectFeedback;
-				 }
-				
-				 optionObj.find("input").prop("checked","true");				 
-				 iscorrectimg.closest("span").show();
-
+			var iscorrectimg = optionObj.find(".iscorrect").find("img")
+			if (currQustion.Options[i].IsCorrect) {
+				iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png")
+				iscorrectimg.closest("span").show();
+				iscorrectimg.attr("aria-label", "Correct option");
+				if (_Navigator.IsPresenterMode()) {
+					optionObj.find("input").prop("checked", "true");
+				}
 			}
-
-			questionObj.find(".question-band").append(optionObj)
-			
+			if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
+				if (!currQustion.Options[i].IsCorrect) {
+					iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
+					iscorrectimg.attr("aria-label", "Incorrect option selected");
+					feedbacktext = currQustion.IncorrectFeedback;
+				}
+				else {
+					iscorrectimg.attr("aria-label", "Correct option selected");
+					score++;
+					feedbacktext = currQustion.CorrectFeedback;
+				}
+				optionObj.find("input").prop("checked", "true");
+				iscorrectimg.closest("span").show();
+			}
+			questionObj.find(".question-band fieldset").append(optionObj)
 		}
 		var fdk =$(".questionfdk").clone();
 		fdk.removeClass("questionfdk");
@@ -229,8 +222,8 @@ function showSummary(){
 	    questionObj.find(".question-band").addClass("summaryoptions");
 		$("#Summary").append(questionObj);
 		$("#Summary").find("input[type='radio']").k_disable();
-		questionObj.find(".question-band label").css("position","relative");
-		
+		questionObj.find(".question-band label").css("position", "relative");
+		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
 	}
 	if(gRecordData.Status == "Started"){
 		gRecordData.Status  = "Completed";
