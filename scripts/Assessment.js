@@ -240,7 +240,8 @@ function showSummary(){
 		}
 		var fdk =$(".questionfdk").clone();
 		fdk.removeClass("questionfdk");
-		fdk.html("<br aria-hidden='true' />"+feedbacktext);fdk.show()
+		fdk.html("<div>"+feedbacktext +"</div>");
+		fdk.show()
 		questionObj.append(fdk);
 		questionObj.show();
 	    questionObj.find(".question-band").addClass("summaryoptions");
