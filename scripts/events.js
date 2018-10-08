@@ -54,29 +54,6 @@ $(document).on("click", "#linknext", function (event) {
     _Navigator.Next();
 });
 
-// $('.boxleveldropdown').die('click').live('click', function (event) {
-//     DisplaySubmenu();
-// });
-// $('.boxleveldropdown').die('keyup').live('keyup', function (event) {
-//     if (window.event) {
-//         key = window.event.keyCode;
-//     } else if (event) {
-//         key = event.keyCode;
-//     }
-//     // Was the Enter key pressed?
-//     if (key == 13) {
-        
-//         $(this).trigger("click");
-//     }
-
-// });
-
-//$(document).on("dblclick", ".divHotSpot", function (event) {
-//    return;
-
-//});
-
-
 $(document).on("click", ".hintlink", function (event) {
     
     if ($(this).hasClass("expanded")) {
@@ -154,12 +131,6 @@ $(document).on("click", ".assessmentSubmit", function (event) {
     gRecordData.Questions[currentQuestionIndex].IsAnswered = true;
     _Navigator.Next();
 });
-
-
-
-
-
-
 $(document).on('click', ".inputcircle", function (event) {
     $(this).next(".inpputtext").trigger( "click" );
 });
