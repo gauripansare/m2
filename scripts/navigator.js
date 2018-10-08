@@ -353,7 +353,8 @@ var _Navigator = (function () {
             if (_currentPageObject.isStartPage) {
                 $(".main-content").load(pageUrl, function () {
                     OnPageLoad();                   
-                    setReader("header1");
+                    //setReader("header1");
+                    $("#header1").focus();
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
@@ -383,10 +384,11 @@ var _Navigator = (function () {
                             $("#titleheader").focus();
                         else
                         {
-                            $("#progressdiv").focus();
-                           
+                            if(_currentPageId!="p28")
+                            {
+                                 $("#progressdiv").focus();
+                            }                           
                         }
-                        //$("h2.pageheading").focus();//change
                     });
                 })
             }

@@ -309,8 +309,11 @@ var _ModuleCommon = (function () {
         OnPageLoad: function () {
             this.LoadHotSpot();
             this.ApplycontainerWidth();
+            if( $("#div_feedback").length > 0)
+            {
             $("#div_feedback").hide();
-           
+            $("#div_feedback").attr("tabindex","-1")
+            }
             if (_Navigator.IsAnswered()) {               
                 this.DisplayInstructorReviewMode();
             }
@@ -443,8 +446,10 @@ var _ModuleCommon = (function () {
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+                // this.SetFeedbackTop()               
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { 
+                    $("#div_feedback").focus();
+                });
             });
             $("input").k_disable();
             this.EnableNext();
@@ -465,8 +470,10 @@ var _ModuleCommon = (function () {
             $("#div_feedback").css("display", "inline-block");
             
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { });
+                // this.SetFeedbackTop()               
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
+                    $("#div_feedback").focus();
+                 });
             });
            
             this.EnableNext();

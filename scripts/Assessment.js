@@ -4,6 +4,8 @@ var numOfQuestion = 4
 var numOfPagesInModule = 1 + numOfQuestion
 var currentQuestionIndex = 0;
 var introHTML  = "";
+var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+var isIEEdge = /Edge/.test(navigator.userAgent);
 //	- Progress logic = (visitedpages / total pages ) * 100 %
 //  	"visitedNumberOfPages"  -- increase this by one on every page/question -- on next click?
 var visitedNumberOfPages = 0;
@@ -135,33 +137,43 @@ function showQuestionPresenterMode(){
 }
 function showUserReviewMode(){
 	var currQuestion = gRecordData.Questions[currentQuestionIndex];
-                var correctoption =  currQuestion.Options.filter(function (item) {
-                    return item.IsCorrect;
-                })[0];
-               
-                
-                var iscorrectimg = $("#"+correctoption.OptionId).closest("label").find(".iscorrect").find("img")
-                $("#"+correctoption.OptionId).closest("label").css("position","relative");
-                iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
-				iscorrectimg.closest("span").show();
-				if(correctoption.OptionId == currQuestion.UserSelectedOptionId)
-			    {
-					iscorrectimg.attr("aria-label","Correct option selected");
-					$("#"+correctoption.OptionId).prop("checked","true");	
-				}
-				else
-				{
-					iscorrectimg.attr("aria-label","Correct option");
-					$("#"+ currQuestion.UserSelectedOptionId).closest("label").css("position","relative");
-					iscorrectimg = $("#"+ currQuestion.UserSelectedOptionId).closest("label").find(".iscorrect").find("img")
-					$("#"+ currQuestion.UserSelectedOptionId).prop("checked","true");
-					iscorrectimg.attr("src","assets/images/incorrect-v1-1.png")
-					iscorrectimg.attr("aria-label","Incorrect option selected");
-					iscorrectimg.closest("span").show();
-					
-				}
-				$("input[type='radio']").k_disable();
-				$("#linknext").k_enable();
+	var correctoption =  currQuestion.Options.filter(function (item) {
+		return item.IsCorrect;
+	})[0];
+	
+	
+	var iscorrectimg = $("#"+correctoption.OptionId).closest("div").find(".iscorrect").find("img")
+	$("#"+correctoption.OptionId).closest("div").css("position","relative");
+	iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
+	iscorrectimg.closest("span").show();
+	if(correctoption.OptionId == currQuestion.UserSelectedOptionId)
+	{
+		//iscorrectimg.attr("aria-label","Correct option selected");
+		$("#"+correctoption.OptionId).attr("aria-label","Correct option selected "+ $("#"+correctoption.OptionId).closest("div").find(".inpputtext").text())
+		$("#"+correctoption.OptionId).prop("checked","true");	
+		$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
+	}
+	else
+	{
+		
+		$("#"+ currQuestion.UserSelectedOptionId).closest("div").css("position","relative");
+		$("#"+ correctoption.OptionId).closest("div").find("input").attr("aria-label","Correct option " +$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").text());
+		iscorrectimg = $("#"+ currQuestion.UserSelectedOptionId).closest("div").find(".iscorrect").find("img")
+		$("#"+currQuestion.UserSelectedOptionId).attr("aria-label","Incorrect option selected "+ $("#"+currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").text())
+		$("#"+ currQuestion.UserSelectedOptionId).prop("checked","true");
+		iscorrectimg.attr("src","assets/images/incorrect-v1-1.png")
+		//iscorrectimg.attr("aria-label","Incorrect option selected");
+
+		$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
+		$("#"+currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
+
+		iscorrectimg.closest("span").show();
+		
+	}
+	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	
+	$("input[type='radio']").k_disable();
+	$("#linknext").k_enable();
 }
 
 function showSummary(){
@@ -176,8 +188,8 @@ function showSummary(){
 			// randomize options
 			currQustion.Options = shuffle(currQustion.Options)
 		}
-		questionObj.find("#question-band fieldset").empty();
-		questionObj.find("#question-band fieldset").append("<legend aria-label='Options'></legend>")
+		questionObj.find(".question-band fieldset").empty();
+		questionObj.find(".question-band fieldset").append("<legend aria-label='Options'></legend>")
 		var feedbacktext = "";
 		for (var i = 0; i < currQustion.Options.length; i++) {
 			optionObj = $(".Option").clone();
@@ -193,30 +205,42 @@ function showSummary(){
 			if (currQustion.Options[i].IsCorrect) {
 				iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png")
 				iscorrectimg.closest("span").show();
-				iscorrectimg.attr("aria-label", "Correct option");
+				//iscorrectimg.attr("aria-label", "Correct option");
 				if (_Navigator.IsPresenterMode()) {
 					optionObj.find("input").prop("checked", "true");
 				}
+				optionObj.find("input").attr("aria-label","Correct option "+ optionObj.find(".inpputtext").text() )
+				//if (isIE11version || isIEEdge) {
+					optionObj.find(".inpputtext").attr("aria-hidden", "true");
+				//}
+				
 			}
 			if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
 				if (!currQustion.Options[i].IsCorrect) {
 					iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
-					iscorrectimg.attr("aria-label", "Incorrect option selected");
+					//iscorrectimg.attr("aria-label", "Incorrect option selected");
 					feedbacktext = currQustion.IncorrectFeedback;
+					optionObj.find("input").attr("aria-label","Incorrect option selected "+	optionObj.find(".inpputtext").text() )
 				}
 				else {
-					iscorrectimg.attr("aria-label", "Correct option selected");
+					//iscorrectimg.attr("aria-label", "Correct option selected");
+					optionObj.find("input").attr("aria-label","Correct option selected "+	optionObj.find(".inpputtext").text() )
 					score++;
 					feedbacktext = currQustion.CorrectFeedback;
 				}
 				optionObj.find("input").prop("checked", "true");
 				iscorrectimg.closest("span").show();
+				//if (isIE11version || isIEEdge) {
+					optionObj.find(".inpputtext").attr("aria-hidden", "true");
+				//}
 			}
+			iscorrectimg.attr({"alt":"","aria-hidden":"true"});
 			questionObj.find(".question-band fieldset").append(optionObj)
+			
 		}
 		var fdk =$(".questionfdk").clone();
 		fdk.removeClass("questionfdk");
-		fdk.html("<br/>"+feedbacktext);fdk.show()
+		fdk.html("<br aria-hidden='true' />"+feedbacktext);fdk.show()
 		questionObj.append(fdk);
 		questionObj.show();
 	    questionObj.find(".question-band").addClass("summaryoptions");
