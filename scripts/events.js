@@ -29,7 +29,7 @@ $(document).on("click", ".qheight", function (event) {
 var hotspotclicked = false;;
 var hotspot;
 $(document).on("click", ".divHotSpot", function (event) {
-    debugger;
+    
     event.preventDefault();
     $(this).k_disable()
     if (hotspotclicked || _Navigator.IsAnswered())
@@ -78,7 +78,7 @@ $(document).on("click", "#linknext", function (event) {
 
 
 $(document).on("click", ".hintlink", function (event) {
-    debugger;
+    
     if ($(this).hasClass("expanded")) {
         $(".hintlink").removeClass("expanded")
         $(".hintlink").attr("aria-expanded", "false")

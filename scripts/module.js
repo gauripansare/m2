@@ -95,7 +95,7 @@ var _ModuleCommon = (function () {
                 }
             }
             this.ShowFeedbackReviewMode();
-            debugger;
+            
             $(".divHotSpot").addClass("disabled");
             $(".divHotSpot").attr("aria-disabled", "true");
             $(".divHotSpot").attr("disabled", "true");
@@ -177,9 +177,7 @@ var _ModuleCommon = (function () {
             }
         },
         AddHotspotClick: function (hotspotObj, event) {
-
-            //$(".divHotSpot").remove();
-            debugger;
+            //$(".divHotSpot").remove();          
             if (_Navigator.IsAnswered()) {
                 return;
             }
@@ -313,8 +311,7 @@ var _ModuleCommon = (function () {
             this.ApplycontainerWidth();
             $("#div_feedback").hide();
            
-            if (_Navigator.IsAnswered()) {
-                debugger;
+            if (_Navigator.IsAnswered()) {               
                 this.DisplayInstructorReviewMode();
             }
         },
@@ -546,7 +543,7 @@ var _ModuleCommon = (function () {
         },
         AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
-              //var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="_Navigator.Prev()" role="button" tabindex = 195 aria-label="Previous"><a id="prev_arrow" href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="_Navigator.Next()" role="button" tabindex = 198 aria-label="Next"><a id="next_arrow" href="#"></a></div></div>';
+             
               var str = '<div class="presentationModeFooter">Presentation Mode</div>';
               $("footer").append($(str));
               $("footer").show().css("display","inline");
@@ -569,100 +566,8 @@ var _ModuleCommon = (function () {
       }
     }
 })();
-function AppendFooter() {
-    debugger;
-    if ($(".levelfooterdiv").length == 0) {
-        var str = '<div class="levelfooterdiv"><div class="navBtn prev" onClick="GoToPrev()" role="button" tabindex = 195 aria-label="Previous"><a href="#"></a></div><div style="display: inline-block;width: 2px;"></div><div class="boxleveldropdown" style="width: 150px;"  role="button" tabindex = 196 aria-label="Scorecard"><span class="leftarrow"></span><ul class="levelmenu"><li class="uparrow" style = "width: 100px; margin-left: -8px;"><span class="menutitle" >Scorecard</span><div class="levelsubMenu" tabindex = 197 role="text">Total Score - <br>Activity Score - </div><a class="menuArrow"></a></div><div style="display: inline-block;width: 2px;"></div><div class="navBtn next" onClick="GoToNext()" role="button" tabindex = 198 aria-label="Next"><a href="#"></a></div></div>';
-        $("#wrapper").append($(str));
-        $(".navBtn.prev").css({
-            "opacity": ".5",
-            "pointer-events": "none"
-        });
-        $(".navBtn.prev").attr("aria-disabled","true")
-    }
-}
-
-function DisplaySubmenu() {
-    if ($(".levelsubMenu").is(":visible")) {
-        $(".levelsubMenu").hide();
-        $('.rightarrow').removeClass('fa-chevron-up').addClass('fa-chevron-right');
-    } else {
-        $(".levelsubMenu").show();
-        $('.rightarrow').removeClass('fa-chevron-right').addClass('fa-chevron-up');
-    }
-}
-var mTreeObj = {
-    Goto: function (pageid) {
-        _Navigator.LoadPage(pageid);
-    },
-    GoToPrev: function () {
-        debugger;
-        try {
-            if ($(".navBtn.prev").css("pointer-events") == "none") {
-                return;
-            }
-            else
-            {
-                _Navigator.Prev();
-                if (_Navigator.GetCurrentPage().nextPageId != undefined && _Navigator.GetCurrentPage().nextPageId != "") {
-                    enableobj($(".navBtn.next"));
-                } else {
-                    disableobj($(".navBtn.next"));
-                }
-                if (_Navigator.GetCurrentPage().PrevPageId != undefined && _Navigator.GetCurrentPage().PrevPageId != "") {
-                     enableobj($(".navBtn.prev"));
-                } else {
-                    disableobj($(".navBtn.prev"));
-                }
-            }
-        } catch (expn) {
-            //menuNodeIndex++;
-            alert(expn.message);
-        }
-    },
-    GoToNext: function () {
-        try {
-            debugger;
-            if ($(".navBtn.next").css("pointer-events") == "none") {
-                return;
-            } 
-            else{
-                _Navigator.Next();
-                    if (_Navigator.GetCurrentPage().nextPageId != undefined && _Navigator.GetCurrentPage().nextPageId != "") {
-                        enableobj($(".navBtn.next"));
-                    } else {
-                        disableobj($(".navBtn.next"));
-                    }
-                    if (_Navigator.GetCurrentPage().prevPageId != undefined &&_Navigator.GetCurrentPage().prevPageId != "") {
-                        enableobj($(".navBtn.prev"));
-                    } else {
-                        disableobj($(".navBtn.prev"));
-                    }
-                }
-            
-        } catch (expn) {
-            //menuNodeIndex--;
-            alert(expn.message);
-        }
-    }
-};
 
 
-
-function disableobj(obj) {
-    obj.css({
-        "opacity": ".5",
-        "pointer-events": "none"
-    });
-    obj.attr("aria-disabled", "true");
-}
-function enableobj(obj) {
-    obj.css({
-        "opacity": "1",
-        "pointer-events": ""
-    });
-    obj.attr("aria-disabled", "false");
-}
 
 
 $(document).ready(function () {

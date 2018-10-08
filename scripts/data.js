@@ -93,10 +93,10 @@ var _PData = {
             "Hotspots": [
               {
                   HotspotId: 1,
-                  width: "11.557788944723619%",
-                  height: "2.47229326513214%",
+                  width: "65.557789%",                 
+                  height: "10.472293%",
+                  left: "29.513065%",
                   top: "54.54100596760443%",
-                  left: "65.51306532663317%",
                   widthPX: "92px",
                   heightPX: "33px",
                   topPX: "639.765625px",

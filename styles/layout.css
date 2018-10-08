@@ -88,6 +88,10 @@ button:active, textarea:active, select:active,
     outline: none
 }
 
+#progressdiv:focus,#titleheader:focus{ /*for accessibility*/
+    outline: none
+}
+
 .mxwidth {
     max-width: 990px;
 }
