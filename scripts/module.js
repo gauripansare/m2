@@ -475,7 +475,7 @@ var _ModuleCommon = (function () {
                     $("#div_feedback").focus();
                  });
             });
-           
+            $(".divHotSpot").k_disable();
             this.EnableNext();
         },
         HotspotNext: function () {
