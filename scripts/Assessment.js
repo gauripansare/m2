@@ -4,16 +4,8 @@ var numOfQuestion = 4
 var numOfPagesInModule = 1 + numOfQuestion
 var currentQuestionIndex = 0;
 var introHTML  = "";
-
-//	- Progress logic = (visitedpages / total pages ) * 100 %
-//  	"visitedNumberOfPages"  -- increase this by one on every page/question -- on next click?
 var visitedNumberOfPages = 0;
-
-
 var gRecordData = null;
-
-
- //	- Score -- number of correct attempted questions divided by total number of questions
 var AssessmentScore = 0;
 
 function startRecordPlayer(){
@@ -21,7 +13,7 @@ function startRecordPlayer(){
 	window.document.title = gRecordData.RecordTitle
 	$("#header-title").find("h1").text(gRecordData.RecordTitle)
 
-	//$(".main-content").load(gRecordData.LandingPageURL)
+	
 	// init global var
 	AssessmentScore = gRecordData.AssessmentScore;
 	visitedNumberOfPages = gRecordData.VisitedNumberOfPages
@@ -178,9 +170,12 @@ function showUserReviewMode(){
 
 		iscorrectimg.closest("span").show();
 		
-	}	
+	}
+	$("input[type='radio']").attr("readonly", "readonly");	
+	if(!isIE11version){
+		$("input[type='radio']").k_disable();
+	}
 	
-	$("input[type='radio']").k_disable();
 	$("#linknext").k_enable();
 }
 
@@ -221,10 +216,9 @@ function showSummary(){
 				if (_Navigator.IsPresenterMode()) {
 					optionObj.find("input").prop("checked", "true");
 				}
-				optionObj.find("input").attr("aria-label","Correct option "+ optionObj.find(".inpputtext").text() )
-				//if (isIE11version || isIEEdge) {
-					optionObj.find(".inpputtext").attr("aria-hidden", "true");
-				//}
+				optionObj.find("input").attr("aria-label","Correct option "+ optionObj.find(".inpputtext").text() )				
+				optionObj.find(".inpputtext").attr("aria-hidden", "true");
+				
 				
 			}
 			if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
@@ -261,12 +255,13 @@ function showSummary(){
 		{
 			$(".assessmentradio").unwrap(".optionparent")
 		}
-		if(!isIE11version && !isIEEdge){
-			$("#Summary").find("input[type='radio']").k_disable();
-		}
+		
 		
 		questionObj.find(".question-band label").css("position", "relative");
 		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
+		if(!isIE11version){
+			$("#Summary").find("input[type='radio']").k_disable();
+		}
 	}
 	if(gRecordData.Status == "Started"){
 		gRecordData.Status  = "Completed";
