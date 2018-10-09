@@ -67,6 +67,7 @@ $(document).on("click", ".hintlink", function (event) {
             $(".hintlink").attr("aria-expanded", "true");
         });
     }
+    $(".hintlink").focus();
 
 });
 $(document).on("click", ".closehintlink", function (event) {
