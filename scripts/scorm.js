@@ -1,4 +1,4 @@
-var _Scormfunction = (function(){
+var _ScormUtility = (function(){
     return{
      GetBookMark:function() {
         var bookmark = scorm.get("cmi.location");
@@ -8,6 +8,20 @@ var _Scormfunction = (function(){
     setBookMark:function(bookmark) {
 		
         var setlessonLocation = scorm.set("cmi.location", bookmark + "" );
+    },
+
+    saveScormData :function(){
+
+    },
+
+    getScormData:function(){
+
+    },
+
+    scormcomplete:function(){
+        
     }
+
+
 }
 });

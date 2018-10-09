@@ -74,7 +74,7 @@ $(document).on("click", ".closehintlink", function (event) {
 
     $(".hintlink").removeClass("expanded")
     $(".hintlink").attr("aria-expanded", "false")
-    $(".hintcontainer").slideUp(100);
+    $(".hintcontainer").slideUp(100,function(){$(".hintlink").focus();});
 
 
 });
@@ -124,8 +124,7 @@ $(document).on('mouseout', ".hintlink", function (event) {
 });
 
 $(document).on("change", ".assessmentradio", function (event) {
-    $(".assessmentSubmit").k_enable();  
-  
+    $(".assessmentSubmit").k_enable();    
 });
 $(document).on("click", ".assessmentSubmit", function (event) {
     gRecordData.Questions[currentQuestionIndex].UserSelectedOptionId = $("input[type='radio']:checked").attr("id") ;

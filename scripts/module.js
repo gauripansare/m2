@@ -1,5 +1,8 @@
-﻿var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+﻿
 var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+var ipad = !!navigator.platform && /iPad|iPod/.test(navigator.platform);
+var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+var isIEEdge = /Edge/.test(navigator.userAgent);
 var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
 jQuery.fn.extend({
     k_enable: function () {
@@ -311,8 +314,8 @@ var _ModuleCommon = (function () {
             this.ApplycontainerWidth();
             if( $("#div_feedback").length > 0)
             {
-            $("#div_feedback").hide();
-            $("#div_feedback").attr("tabindex","-1")
+                $("#div_feedback").hide();
+               
             }
             if (_Navigator.IsAnswered()) {               
                 this.DisplayInstructorReviewMode();
@@ -322,7 +325,8 @@ var _ModuleCommon = (function () {
            
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = _PData[currentPageData.pageId];
-
+            var aceessTextforImg = currentPageData.accessText;
+            $(".activityimg").attr("alt",aceessTextforImg)
             if (pageData != undefined) {
 
                 var hotspotdata = pageData.ImageHotSpots;
@@ -340,7 +344,7 @@ var _ModuleCommon = (function () {
                         var pleft = hotspotdata.Hotspots[i].left;
                         var ptop = hotspotdata.Hotspots[i].top;
                         var accessText = hotspotdata.Hotspots[i].accessText;
-                        var aceessTextforImg = currentPageData.accessText;
+                       
                         if ((hotspotdata.Hotspots[i].left + "").indexOf("px") != -1) {
                             pleft = getPerc(Number(hotspotdata.Hotspots[i].left.replace("px", "").replace("%", "")), orw) + "%";
                             ptop = getPerc(Number(hotspotdata.Hotspots[i].top.replace("px", "").replace("%", "")), orh) + "%";
@@ -348,7 +352,7 @@ var _ModuleCommon = (function () {
                                 
                         htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
                     }
-                    $(".activityimg").attr("alt",aceessTextforImg)
+                   
                     $(".wrapperimage").append(htmlForDivHotspotImage)
                 }
 
@@ -445,10 +449,12 @@ var _ModuleCommon = (function () {
             var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + pageData.EmbedSettings.feedbackurl;
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
+            
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()               
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () { 
-                    $("#div_feedback").focus();
+                // this.SetFeedbackTop()   
+                $("#div_feedback p:first").attr("tabindex","-1")            
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {                    
+                    $("#div_feedback p:first").focus();
                 });
             });
             $("input").k_disable();
@@ -470,9 +476,10 @@ var _ModuleCommon = (function () {
             $("#div_feedback").css("display", "inline-block");
             
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()               
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
-                    $("#div_feedback").focus();
+                // this.SetFeedbackTop()   
+                $("#div_feedback p:first").attr("tabindex","-1")            
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {                  
+                    $("#div_feedback p:first").focus();
                  });
             });
             $(".divHotSpot").k_disable();

@@ -387,6 +387,9 @@ var _Navigator = (function () {
                             if(_currentPageId!="p28")
                             {
                                  $("#progressdiv").focus();
+                            }
+                            else{
+                                setReader("Questioninfo")
                             }                           
                         }
                     });

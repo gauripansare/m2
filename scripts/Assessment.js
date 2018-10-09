@@ -4,8 +4,7 @@ var numOfQuestion = 4
 var numOfPagesInModule = 1 + numOfQuestion
 var currentQuestionIndex = 0;
 var introHTML  = "";
-var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
-var isIEEdge = /Edge/.test(navigator.userAgent);
+
 //	- Progress logic = (visitedpages / total pages ) * 100 %
 //  	"visitedNumberOfPages"  -- increase this by one on every page/question -- on next click?
 var visitedNumberOfPages = 0;
@@ -101,11 +100,18 @@ function showQuestion(){
 			$("#linknext").k_enable()
 			isFirstQAnswered = true
 		}
+		if(isIE11version || isIEEdge){
+			optionObj.find("input").attr("aria-label",optionObj.find(".inpputtext").text());
+			optionObj.find(".inpputtext").attr("aria-hidden","true")
+		}
 	}
 	$("#Questioninfo").text("Performance Check: Mini-Quiz: Question "+ parseInt(currentQuestionIndex+1) +" of 4")
 	//removeCSS("styles/questionPlaceholder.css")
 	$(".intro-content-question").fadeIn(600)
-	
+	if(ipad)
+	{
+		$(".assessmentradio").unwrap(".optionparent")
+	}
 	
 	setReader("Questioninfo")
 	
@@ -122,29 +128,31 @@ function showQuestion(){
 }
 function showQuestionPresenterMode(){
 	var currQuestion = gRecordData.Questions[currentQuestionIndex];
-                var correctoption =  currQuestion.Options.filter(function (item) {
-                    return item.IsCorrect;
-                })[0];
-                $("#"+correctoption.OptionId).prop("checked","true");	
-                $("input[type='radio']").k_disable();
-                var iscorrectimg = $("#"+correctoption.OptionId).closest("label").find(".iscorrect").find("img")
-                $("#"+correctoption.OptionId).closest("label").css("position","relative");
-                iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
-				iscorrectimg.closest("span").show();
-				iscorrectimg.attr("aria-label","Correct option selected");
-				gRecordData.Status = "Completed";
-				$("#linknext").k_enable();
+	var correctoption =  currQuestion.Options.filter(function (item) {
+		return item.IsCorrect;
+	})[0];
+	$("#"+correctoption.OptionId).prop("checked","true");	
+	$("input[type='radio']").k_disable();
+	var iscorrectimg = $("#"+correctoption.OptionId).closest("label").find(".iscorrect").find("img")
+	$("#"+correctoption.OptionId).closest("label").css("position","relative");
+	iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png");
+	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	iscorrectimg.closest("span").show();
+	iscorrectimg.attr("aria-label","Correct option selected");
+	gRecordData.Status = "Completed";
+	$("#linknext").k_enable();
+				
 }
 function showUserReviewMode(){
 	var currQuestion = gRecordData.Questions[currentQuestionIndex];
 	var correctoption =  currQuestion.Options.filter(function (item) {
 		return item.IsCorrect;
-	})[0];
-	
+	})[0];	
 	
 	var iscorrectimg = $("#"+correctoption.OptionId).closest("div").find(".iscorrect").find("img")
 	$("#"+correctoption.OptionId).closest("div").css("position","relative");
 	iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
+	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
 	iscorrectimg.closest("span").show();
 	if(correctoption.OptionId == currQuestion.UserSelectedOptionId)
 	{
@@ -162,6 +170,7 @@ function showUserReviewMode(){
 		$("#"+currQuestion.UserSelectedOptionId).attr("aria-label","Incorrect option selected "+ $("#"+currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").text())
 		$("#"+ currQuestion.UserSelectedOptionId).prop("checked","true");
 		iscorrectimg.attr("src","assets/images/incorrect-v1-1.png")
+		iscorrectimg.attr({"alt":"","aria-hidden":"true"});
 		//iscorrectimg.attr("aria-label","Incorrect option selected");
 
 		$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
@@ -169,8 +178,7 @@ function showUserReviewMode(){
 
 		iscorrectimg.closest("span").show();
 		
-	}
-	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	}	
 	
 	$("input[type='radio']").k_disable();
 	$("#linknext").k_enable();
@@ -201,6 +209,10 @@ function showSummary(){
 			optionObj.find("input").attr("name", radioname)
 			optionObj.show();
 			//questionObj.find(".question-band").append(optionObj)
+			if(isIE11version || isIEEdge){
+				optionObj.find("input").attr("aria-label",optionObj.find(".inpputtext").text());
+				optionObj.find(".inpputtext").attr("aria-hidden","true")
+			}
 			var iscorrectimg = optionObj.find(".iscorrect").find("img")
 			if (currQustion.Options[i].IsCorrect) {
 				iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png")
@@ -229,10 +241,9 @@ function showSummary(){
 					feedbacktext = currQustion.CorrectFeedback;
 				}
 				optionObj.find("input").prop("checked", "true");
-				iscorrectimg.closest("span").show();
-				//if (isIE11version || isIEEdge) {
-					optionObj.find(".inpputtext").attr("aria-hidden", "true");
-				//}
+				iscorrectimg.closest("span").show();				
+				optionObj.find(".inpputtext").attr("aria-hidden", "true");
+				
 			}
 			iscorrectimg.attr({"alt":"","aria-hidden":"true"});
 			questionObj.find(".question-band fieldset").append(optionObj)
@@ -246,7 +257,14 @@ function showSummary(){
 		questionObj.show();
 	    questionObj.find(".question-band").addClass("summaryoptions");
 		$("#Summary").append(questionObj);
-		$("#Summary").find("input[type='radio']").k_disable();
+		if(ipad)
+		{
+			$(".assessmentradio").unwrap(".optionparent")
+		}
+		if(!isIE11version && !isIEEdge){
+			$("#Summary").find("input[type='radio']").k_disable();
+		}
+		
 		questionObj.find(".question-band label").css("position", "relative");
 		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
 	}
