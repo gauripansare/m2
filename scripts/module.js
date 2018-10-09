@@ -585,9 +585,7 @@ var _ModuleCommon = (function () {
 
 
 $(document).ready(function () {
-    _Navigator.Start();   
-  
-  
+    _Navigator.Start();
    $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
 

@@ -105,7 +105,7 @@ function showQuestion(){
 		$(".assessmentradio").unwrap(".optionparent")
 	}
 	
-	setReader("Questioninfo")
+	$("#Questioninfo").focus();
 	
 	
 	if(_Navigator.IsPresenterMode()){
@@ -172,9 +172,9 @@ function showUserReviewMode(){
 		
 	}
 	$("input[type='radio']").attr("readonly", "readonly");	
-	if(!isIE11version){
+	//if(!isIE11version){
 		$("input[type='radio']").k_disable();
-	}
+	//}
 	
 	$("#linknext").k_enable();
 }
@@ -259,9 +259,9 @@ function showSummary(){
 		
 		questionObj.find(".question-band label").css("position", "relative");
 		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
-		if(!isIE11version){
+		//if(!isIE11version){
 			$("#Summary").find("input[type='radio']").k_disable();
-		}
+		//}
 	}
 	if(gRecordData.Status == "Started"){
 		gRecordData.Status  = "Completed";
@@ -270,5 +270,5 @@ function showSummary(){
 	_Navigator.UpdateProgressBar();
 	var perscore = score / gRecordData.AssessmentScore * 100;
 	$("#ScoreSummary").text("Score: "+perscore+"%");
-	setReader("summaryheading")
+	$("#summaryheading").focus();
 }
