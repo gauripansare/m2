@@ -100,10 +100,6 @@ function showQuestion(){
 	$("#Questioninfo").text("Performance Check: Mini-Quiz: Question "+ parseInt(currentQuestionIndex+1) +" of 4")
 	//removeCSS("styles/questionPlaceholder.css")
 	$(".intro-content-question").fadeIn(600)
-	if(ipad)
-	{
-		$(".assessmentradio").unwrap(".optionparent")
-	}
 	
 	$("#Questioninfo").focus();
 	
@@ -171,6 +167,11 @@ function showUserReviewMode(){
 		iscorrectimg.closest("span").show();
 		
 	}
+	if(isFirefox )
+		{
+			setcustomarialabelforradio();
+
+		}
 	$("input[type='radio']").attr("readonly", "readonly");	
 	//if(!isIE11version){
 		$("input[type='radio']").k_disable();
@@ -251,13 +252,13 @@ function showSummary(){
 		questionObj.show();
 	    questionObj.find(".question-band").addClass("summaryoptions");
 		$("#Summary").append(questionObj);
-		if(ipad)
-		{
-			$(".assessmentradio").unwrap(".optionparent")
-		}
-		
 		
 		questionObj.find(".question-band label").css("position", "relative");
+		if(isFirefox )
+		{
+			setcustomarialabelforradio();
+
+		}
 		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
 		//if(!isIE11version){
 			$("#Summary").find("input[type='radio']").k_disable();
@@ -271,4 +272,31 @@ function showSummary(){
 	var perscore = score / gRecordData.AssessmentScore * 100;
 	$("#ScoreSummary").text("Score: "+perscore+"%");
 	$("#summaryheading").focus();
+}
+
+function setcustomarialabelforradio(){
+	$("input[type='radio']").each(function(){
+		var ischecked ="\n radio button unavailable"
+		if($(this).prop("checked") == "true" || $(this).prop("checked") == true)
+		{
+			ischecked = ischecked +" checked "
+		}
+		else
+		{
+			ischecked = ischecked +" not checked "
+		}
+		var radioalabel = "";
+		if($(this).attr("aria-label")!=undefined)
+		{
+			radioalabel = $(this).attr("aria-label");
+		}
+		else
+		{
+			radioalabel =  $(this).closest("div").find(".inpputtext").text() ;
+		}
+		radioalabel = ischecked + radioalabel;
+		$(this).closest("div").attr("aria-label",radioalabel);
+		$(this).closest("div").find("*").attr("aria-hidden","true")
+
+	})
 }

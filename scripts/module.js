@@ -4,6 +4,7 @@ var ipad = !!navigator.platform && /iPad|iPod/.test(navigator.platform);
 var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
 var isIEEdge = /Edge/.test(navigator.userAgent);
 var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+var isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
 jQuery.fn.extend({
     k_enable: function () {
         return this.removeClass('disabled').attr("aria-disabled", "false").removeAttr("disabled");
