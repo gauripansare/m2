@@ -119,11 +119,13 @@ $(document).on('mouseover', ".hintlink", function (event) {
 });
 
 $(document).on('mouseout', ".hintlink", function (event) {
- $(".hintlink .hintlinkspan").css({"color":"#047a9c","border-bottom":"1px solid #047a9c"})
- $(this).find("path").css({"fill":"#047a9c"}) 
+    $(".hintlink .hintlinkspan").css({"color":"#047a9c","border-bottom":"1px solid #047a9c"})
+    $(this).find("path").css({"fill":"#047a9c"}) 
 });
 
 $(document).on("change", ".assessmentradio", function (event) {
+    if($(this).hasClass("disabled"))
+    return;
     $(".assessmentSubmit").k_enable();    
 });
 $(document).on("click", ".assessmentSubmit", function (event) {
@@ -132,5 +134,14 @@ $(document).on("click", ".assessmentSubmit", function (event) {
     _Navigator.Next();
 });
 $(document).on('click', ".inputcircle", function (event) {
+   
     $(this).next(".inpputtext").trigger( "click" );
 });
+
+window.onload = function () {
+    _ScormUtility.Init();
+}
+
+window.onunload = function () {
+    _ScormUtility.End();
+}

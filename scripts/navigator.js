@@ -309,6 +309,7 @@ var _Navigator = (function () {
             this.LoadPage("p1");
         },
         LoadPage: function (pageId, jsonObj) {
+            this.SetBookMarkPage();
             if (jsonObj == undefined) {
                 jsonObj = {};
             }
@@ -361,6 +362,7 @@ var _Navigator = (function () {
                     $(".main-content").load(pageUrl, function () {
                         $(this).fadeTo(600, 1)
                         OnPageLoad();
+
                         if(_currentPageId=="p28")//  change to assessment id
                         {
                             showQuestion();
@@ -551,11 +553,46 @@ var _Navigator = (function () {
             return false;
 
         },
-        SetPresenterMode:function(val){
+        SetPresenterMode: function(val){
             presentermode = val;
         },
-        IsPresenterMode:function(){
+        IsPresenterMode: function(){
             return presentermode;
+        },
+        GetBookmarkData: function(){
+           var bookmarkdata = _ScormUtility.GetSuspendData();
+           if(bookmarkdata!=undefined)
+           {
+                bookmarkdata= JSON.parse(bookmarkdata);
+                _NData = bookmarkdata.Ndata;
+                progressLevels=bookmarkdata.progressLevels;
+                _ModuleCommon.SetFeedbackTop(bookmarkdata.ReviewData)
+           }
+           
+        },
+        GetNavigatorBMData : function(){
+
+        },
+        SetBookmarkData: function(){
+            var bookmarobj = {}
+            bookmarobj.Ndata = this.GetNavigatorBMData();
+            bookmarobj.progressLevels = progressLevels;
+            bookmarobj.ReviewData = _ModuleCommon.GetReviewData();
+            _ScormUtility.SetBookmarkData(JSON.stringify(bookmarobj))
+        },
+        SetBookMarkPage: function(pageid){
+            _ScormUtility.SetBookMark(pageid);
+        },
+        GetBookMarkPage: function(){
+            var pageid = "";
+            pageid  =  _ScormUtility.GetBookMark();
+            return pageid;
+        },
+        Initialize:function(){
+            if(isscorm)
+            {
+                _ScormUtility.Init();
+            }
         }
     };
 })();

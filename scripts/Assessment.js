@@ -3,35 +3,34 @@
 var numOfQuestion = 4
 var numOfPagesInModule = 1 + numOfQuestion
 var currentQuestionIndex = 0;
-var introHTML  = "";
+var introHTML = "";
 var visitedNumberOfPages = 0;
 var gRecordData = null;
 var AssessmentScore = 0;
 
-function startRecordPlayer(){
+function startRecordPlayer() {
 	//show record title
 	window.document.title = gRecordData.RecordTitle
 	$("#header-title").find("h1").text(gRecordData.RecordTitle)
 
-	
+
 	// init global var
 	AssessmentScore = gRecordData.AssessmentScore;
 	visitedNumberOfPages = gRecordData.VisitedNumberOfPages
-	if( gRecordData.Status == "NotStarted" ){
+	if (gRecordData.Status == "NotStarted") {
 		//randomize questions
 		gRecordData.Questions = shuffle(gRecordData.Questions)
 	}
-	else
-	{
+	else {
 		// set currentQuestionIndex by looping through last visited question
-		for(var a=0; a < gRecordData.Questions.length; a++){
-			if(gRecordData.Questions[a].UserSelectedOptionId == ""){
+		for (var a = 0; a < gRecordData.Questions.length; a++) {
+			if (gRecordData.Questions[a].UserSelectedOptionId == "") {
 				currentQuestionIndex = a;
 			}
 		}
 
 		// if its not landing page
-		if(gRecordData.LastVisitedPage != "1"  ){
+		if (gRecordData.LastVisitedPage != "1") {
 
 		}
 	}
@@ -40,29 +39,29 @@ function startRecordPlayer(){
 }
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+	var currentIndex = array.length, temporaryValue, randomIndex;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
 
-  return array;
+	return array;
 }
 var isFirstQAnswered = false
-function showQuestion(){
-	
+function showQuestion() {
+
 	//addCSS("styles/questionPlaceholder.css");
-	$(".question-band fieldset").empty();
-	$(".question-band fieldset").append("<legend aria-label='Options'></legend>")
+	$(".question-band").empty();
+	$(".question-band").append("<legend aria-label='Options'></legend>")
 	$(".intro-content-question").hide();
 	currQustion = gRecordData.Questions[currentQuestionIndex]
 	if (gRecordData.Status == "NotStarted") {
@@ -77,34 +76,34 @@ function showQuestion(){
 	$("#linkprevious").k_enable();
 	$("#linknext").k_disable();
 
-	for(var i=0; i < currQustion.Options.length; i++){
+	for (var i = 0; i < currQustion.Options.length; i++) {
 		optionObj = $(".Option").clone();
-		optionObj.attr("id", "label"+currQustion.Options[i].OptionId)
+		optionObj.attr("id", "label" + currQustion.Options[i].OptionId)
 		optionObj.find("input").attr("id", currQustion.Options[i].OptionId)
 		optionObj.find("input").attr("name", "radiobutton")
 		optionObj.find(".inpputtext").html(currQustion.Options[i].OptionText)
 		optionObj.find(".inpputtext").attr("for", currQustion.Options[i].OptionId)
 		optionObj.removeClass("Option")
 		optionObj.show();
-		$(".question-band fieldset").append(optionObj)
+		$(".question-band").append(optionObj)
 		if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
 			$("#" + currQustion.Options[i].OptionId).trigger("click");
 			$("#linknext").k_enable()
 			isFirstQAnswered = true
 		}
-		if(isIE11version || isIEEdge){
-			optionObj.find("input").attr("aria-label",optionObj.find(".inpputtext").text());
-			optionObj.find(".inpputtext").attr("aria-hidden","true")
+		if (isIE11version || isIEEdge) {
+			optionObj.find("input").attr("aria-label", optionObj.find(".inpputtext").text());
+			optionObj.find(".inpputtext").attr("aria-hidden", "true")
 		}
 	}
-	$("#Questioninfo").text("Performance Check: Mini-Quiz: Question "+ parseInt(currentQuestionIndex+1) +" of 4")
+	$("#Questioninfo").text("Performance Check: Mini-Quiz: Question " + parseInt(currentQuestionIndex + 1) + " of 4")
 	//removeCSS("styles/questionPlaceholder.css")
 	$(".intro-content-question").fadeIn(600)
-	
+
 	$("#Questioninfo").focus();
-	
-	
-	if(_Navigator.IsPresenterMode()){
+
+
+	if (_Navigator.IsPresenterMode()) {
 		showQuestionPresenterMode();
 		$("#linknext").k_enable()
 	}
@@ -114,86 +113,86 @@ function showQuestion(){
 	_Navigator.UpdateProgressBar();
 	$(".assessmentSubmit").k_disable();
 }
-function showQuestionPresenterMode(){
+function showQuestionPresenterMode() {
 	var currQuestion = gRecordData.Questions[currentQuestionIndex];
-	var correctoption =  currQuestion.Options.filter(function (item) {
+	var correctoption = currQuestion.Options.filter(function (item) {
 		return item.IsCorrect;
 	})[0];
-	$("#"+correctoption.OptionId).prop("checked","true");	
+	$("#" + correctoption.OptionId).prop("checked", "true");
 	$("input[type='radio']").k_disable();
-	var iscorrectimg = $("#"+correctoption.OptionId).closest("label").find(".iscorrect").find("img")
-	$("#"+correctoption.OptionId).closest("label").css("position","relative");
-	iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png");
-	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	var iscorrectimg = $("#" + correctoption.OptionId).closest("label").find(".iscorrect").find("img")
+	$("#" + correctoption.OptionId).closest("label").css("position", "relative");
+	iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png");
+	iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
 	iscorrectimg.closest("span").show();
-	iscorrectimg.attr("aria-label","Correct option selected");
+	iscorrectimg.attr("aria-label", "Correct option selected");
 	gRecordData.Status = "Completed";
 	$("#linknext").k_enable();
-				
+
 }
-function showUserReviewMode(){
+function showUserReviewMode() {
 	var currQuestion = gRecordData.Questions[currentQuestionIndex];
-	var correctoption =  currQuestion.Options.filter(function (item) {
+	var correctoption = currQuestion.Options.filter(function (item) {
 		return item.IsCorrect;
-	})[0];	
-	
-	var iscorrectimg = $("#"+correctoption.OptionId).closest("div").find(".iscorrect").find("img")
-	$("#"+correctoption.OptionId).closest("div").css("position","relative");
-	iscorrectimg.attr("src","assets/images/tick-icon-correct-1.png")
-	iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	})[0];
+
+	var iscorrectimg = $("#" + correctoption.OptionId).closest("div").find(".iscorrect").find("img")
+	$("#" + correctoption.OptionId).closest("div").css("position", "relative");
+	iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png")
+	iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
 	iscorrectimg.closest("span").show();
-	if(correctoption.OptionId == currQuestion.UserSelectedOptionId)
-	{
+	if (correctoption.OptionId == currQuestion.UserSelectedOptionId) {
 		//iscorrectimg.attr("aria-label","Correct option selected");
-		$("#"+correctoption.OptionId).attr("aria-label","Correct option selected "+ $("#"+correctoption.OptionId).closest("div").find(".inpputtext").text())
-		$("#"+correctoption.OptionId).prop("checked","true");	
-		$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
+		$("#" + correctoption.OptionId).attr("aria-label", "Correct option selected " + $("#" + correctoption.OptionId).closest("div").find(".inpputtext").text())
+		$("#" + correctoption.OptionId).prop("checked", "true");
+		$("#" + correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
 	}
-	else
-	{
-		
-		$("#"+ currQuestion.UserSelectedOptionId).closest("div").css("position","relative");
-		$("#"+ correctoption.OptionId).closest("div").find("input").attr("aria-label","Correct option " +$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").text());
-		iscorrectimg = $("#"+ currQuestion.UserSelectedOptionId).closest("div").find(".iscorrect").find("img")
-		$("#"+currQuestion.UserSelectedOptionId).attr("aria-label","Incorrect option selected "+ $("#"+currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").text())
-		$("#"+ currQuestion.UserSelectedOptionId).prop("checked","true");
-		iscorrectimg.attr("src","assets/images/incorrect-v1-1.png")
-		iscorrectimg.attr({"alt":"","aria-hidden":"true"});
+	else {
+
+		$("#" + currQuestion.UserSelectedOptionId).closest("div").css("position", "relative");
+		$("#" + correctoption.OptionId).closest("div").find("input").attr("aria-label", "Correct option " + $("#" + correctoption.OptionId).closest("div").find(".inpputtext").text());
+		iscorrectimg = $("#" + currQuestion.UserSelectedOptionId).closest("div").find(".iscorrect").find("img")
+		$("#" + currQuestion.UserSelectedOptionId).attr("aria-label", "Incorrect option selected " + $("#" + currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").text())
+		$("#" + currQuestion.UserSelectedOptionId).prop("checked", "true");
+		iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
+		iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
 		//iscorrectimg.attr("aria-label","Incorrect option selected");
 
-		$("#"+ correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
-		$("#"+currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").attr("aria-hidden","true")
+		$("#" + correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
+		$("#" + currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
 
 		iscorrectimg.closest("span").show();
-		
-	}
-	if(isFirefox )
-		{
-			setcustomarialabelforradio();
 
-		}
-	$("input[type='radio']").attr("readonly", "readonly");	
-	//if(!isIE11version){
-		$("input[type='radio']").k_disable();
-	//}
+	}
+	if (isFirefox) {
+		setcustomarialabelforradio();
+
+	}
+	$("input[type='radio']").prop("readonly", "readonly");
+	$("input[type='radio']").k_disable();
 	
+	if (isIE11version) {
+		$("input[type='radio']").removeAttr("aria-disabled");
+		$("input[type='radio']").removeAttr("disabled")
+	}
+	$(".assessmentSubmit").hide();
 	$("#linknext").k_enable();
 }
 
-function showSummary(){
+function showSummary() {
 
 	var score = 0;
-	for(var b=0; b < gRecordData.Questions.length; b++){
+	for (var b = 0; b < gRecordData.Questions.length; b++) {
 		questionObj = $("#Question").clone();
 		currQustion = gRecordData.Questions[b]
-		questionObj.find(".quetiontext").html( "<span style='font-size:0px'>Question Number </span><span>" + (b + 1) + ") &nbsp;</span>" + currQustion.QuestionText)
-		var radioname = "radio" +gRecordData.Questions[b].QuestionId;
-		if(currQustion.UserSelectedOptionId == ""){
+		questionObj.find(".quetiontext").html("<span style='font-size:0px'>Question Number </span><span>" + (b + 1) + ") &nbsp;</span>" + currQustion.QuestionText)
+		var radioname = "radio" + gRecordData.Questions[b].QuestionId;
+		if (currQustion.UserSelectedOptionId == "") {
 			// randomize options
 			currQustion.Options = shuffle(currQustion.Options)
 		}
-		questionObj.find(".question-band fieldset").empty();
-		questionObj.find(".question-band fieldset").append("<legend aria-label='Options'></legend>")
+		questionObj.find(".question-band").empty();
+
 		var feedbacktext = "";
 		for (var i = 0; i < currQustion.Options.length; i++) {
 			optionObj = $(".Option").clone();
@@ -205,9 +204,9 @@ function showSummary(){
 			optionObj.find("input").attr("name", radioname)
 			optionObj.show();
 			//questionObj.find(".question-band").append(optionObj)
-			if(isIE11version || isIEEdge){
-				optionObj.find("input").attr("aria-label",optionObj.find(".inpputtext").text());
-				optionObj.find(".inpputtext").attr("aria-hidden","true")
+			if (isIE11version || isIEEdge) {
+				optionObj.find("input").attr("aria-label", optionObj.find(".inpputtext").text());
+				optionObj.find(".inpputtext").attr("aria-hidden", "true")
 			}
 			var iscorrectimg = optionObj.find(".iscorrect").find("img")
 			if (currQustion.Options[i].IsCorrect) {
@@ -217,86 +216,84 @@ function showSummary(){
 				if (_Navigator.IsPresenterMode()) {
 					optionObj.find("input").prop("checked", "true");
 				}
-				optionObj.find("input").attr("aria-label","Correct option "+ optionObj.find(".inpputtext").text() )				
+				optionObj.find("input").attr("aria-label", "Correct option " + optionObj.find(".inpputtext").text())
 				optionObj.find(".inpputtext").attr("aria-hidden", "true");
-				
-				
+
+
 			}
 			if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
 				if (!currQustion.Options[i].IsCorrect) {
 					iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
 					//iscorrectimg.attr("aria-label", "Incorrect option selected");
 					feedbacktext = currQustion.IncorrectFeedback;
-					optionObj.find("input").attr("aria-label","Incorrect option selected "+	optionObj.find(".inpputtext").text() )
+					optionObj.find("input").attr("aria-label", "Incorrect option selected " + optionObj.find(".inpputtext").text())
 				}
 				else {
 					//iscorrectimg.attr("aria-label", "Correct option selected");
-					optionObj.find("input").attr("aria-label","Correct option selected "+	optionObj.find(".inpputtext").text() )
+					optionObj.find("input").attr("aria-label", "Correct option selected " + optionObj.find(".inpputtext").text())
 					score++;
 					feedbacktext = currQustion.CorrectFeedback;
 				}
 				optionObj.find("input").prop("checked", "true");
-				iscorrectimg.closest("span").show();				
+				iscorrectimg.closest("span").show();
 				optionObj.find(".inpputtext").attr("aria-hidden", "true");
-				
+
 			}
-			iscorrectimg.attr({"alt":"","aria-hidden":"true"});
-			questionObj.find(".question-band fieldset").append(optionObj)
-			
+			iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
+			questionObj.find(".question-band").append(optionObj)
+
 		}
-		var fdk =$(".questionfdk").clone();
+		var fdk = $(".questionfdk").clone();
 		fdk.removeClass("questionfdk");
-		fdk.html("<div>"+feedbacktext +"</div>");
+		fdk.html("<div>" + feedbacktext + "</div>");
 		fdk.show()
 		questionObj.append(fdk);
 		questionObj.show();
-	    questionObj.find(".question-band").addClass("summaryoptions");
+		questionObj.find(".question-band").addClass("summaryoptions");
 		$("#Summary").append(questionObj);
-		
+
 		questionObj.find(".question-band label").css("position", "relative");
-		if(isFirefox )
-		{
+		if (isFirefox) {
 			setcustomarialabelforradio();
 
 		}
-		$("#Summary").find("input[type='radio']").attr("readonly", "readonly");
-		//if(!isIE11version){
-			$("#Summary").find("input[type='radio']").k_disable();
-		//}
+		$("#Summary").find("input[type='radio']").prop("readonly", "readonly");
+		$("#Summary").find("input[type='radio']").k_disable();
+		if (isIE11version) {
+			$("#Summary").find("input[type='radio']").removeAttr("aria-disabled");
+			$("#Summary").find("input[type='radio']").removeAttr("disabled")
+		}
+
 	}
-	if(gRecordData.Status == "Started"){
-		gRecordData.Status  = "Completed";
+	if (gRecordData.Status == "Started") {
+		gRecordData.Status = "Completed";
 		gRecordData.Score = score;
 	}
 	_Navigator.UpdateProgressBar();
 	var perscore = score / gRecordData.AssessmentScore * 100;
-	$("#ScoreSummary").text("Score: "+perscore+"%");
+	$("#ScoreSummary").text("Score: " + perscore + "%");
 	$("#summaryheading").focus();
 }
 
-function setcustomarialabelforradio(){
-	$("input[type='radio']").each(function(){
-		var ischecked ="\n radio button unavailable"
-		if($(this).prop("checked") == "true" || $(this).prop("checked") == true)
-		{
-			ischecked = ischecked +" checked "
+function setcustomarialabelforradio() {
+	$("input[type='radio']").each(function () {
+		var ischecked = "\n radio button unavailable"
+		if ($(this).prop("checked") == "true" || $(this).prop("checked") == true) {
+			ischecked = ischecked + " checked "
 		}
-		else
-		{
-			ischecked = ischecked +" not checked "
+		else {
+			ischecked = ischecked + " not checked "
 		}
 		var radioalabel = "";
-		if($(this).attr("aria-label")!=undefined)
-		{
+		if ($(this).attr("aria-label") != undefined) {
 			radioalabel = $(this).attr("aria-label");
 		}
-		else
-		{
-			radioalabel =  $(this).closest("div").find(".inpputtext").text() ;
+		else {
+			radioalabel = $(this).closest("div").find(".inpputtext").text();
 		}
 		radioalabel = ischecked + radioalabel;
-		$(this).closest("div").attr("aria-label",radioalabel);
-		$(this).closest("div").find("*").attr("aria-hidden","true")
+		$(this).closest("div").attr("aria-label", radioalabel);
+		$(this).closest("div").find("*").attr("aria-hidden", "true")
 
 	})
 }

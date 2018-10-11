@@ -36,6 +36,12 @@ var _ModuleCommon = (function () {
             }
 
         },
+        GetReviewData:function(){
+            return reviewData;
+        },
+        SetReviewData:function(rData){
+            reviewData = rData;
+        },
         GetPageDetailData: function () {
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = _PData[currentPageData.pageId];
@@ -586,7 +592,18 @@ var _ModuleCommon = (function () {
 
 
 $(document).ready(function () {
-    _Navigator.Start();
+    _Navigator.Initialize();
+    _Navigator.GetBookmarkData();
+    var bookmarkpage = _Navigator.GetBookMarkPage();
+    
+    if(bookmarkpage!=undefined && bookmarkpage!=undefined )
+    {
+        _Navigator.LoadPage(bookmarkpage)
+    }
+    else
+    {
+        _Navigator.Start();
+    }
    $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
 
