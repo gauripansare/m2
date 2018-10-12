@@ -131,6 +131,7 @@ $(document).on("change", ".assessmentradio", function (event) {
 $(document).on("click", ".assessmentSubmit", function (event) {
     gRecordData.Questions[currentQuestionIndex].UserSelectedOptionId = $("input[type='radio']:checked").attr("id") ;
     gRecordData.Questions[currentQuestionIndex].IsAnswered = true;
+    _Navigator.SetBookmarkData();
     _Navigator.Next();
 });
 $(document).on('click', ".inputcircle", function (event) {

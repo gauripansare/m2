@@ -88,6 +88,9 @@ var _ModuleCommon = (function () {
                         var posObj = reviewData.Positions[i];
                         var appendImage = $(".wrapperimage");
                         var ht = appendImage.height();
+                        if (ht < 597) {
+                            ht = 597;
+                        }
                         while ((posObj.posY + 40) > ht) {
                             posObj.posY = posObj.posY - 2;
                         }
@@ -441,6 +444,7 @@ var _ModuleCommon = (function () {
                 default:
                     break;
             }
+            _Navigator.SetBookmarkData();
         },
         SetFeedbackTop: function () {
             var ptop = Number($("#div_feedback").position().top);
@@ -561,6 +565,7 @@ var _ModuleCommon = (function () {
                 $(".divHotSpot").removeClass("disabled");
                 $(".divHotSpot").removeClass("hotspotclicked");
             }
+            _Navigator.SetBookmarkData();
         },
         AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
@@ -592,11 +597,12 @@ var _ModuleCommon = (function () {
 
 
 $(document).ready(function () {
+    debugger;
     _Navigator.Initialize();
     _Navigator.GetBookmarkData();
     var bookmarkpage = _Navigator.GetBookMarkPage();
     
-    if(bookmarkpage!=undefined && bookmarkpage!=undefined )
+    if(bookmarkpage!=undefined && bookmarkpage!="" )
     {
         _Navigator.LoadPage(bookmarkpage)
     }

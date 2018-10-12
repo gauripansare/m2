@@ -31,9 +31,9 @@ example of the proper usage of every metadata element.
 
   <organizations default="knowdl_scorm_default_org">
 		<organization identifier="knowdl_scorm_default_org">
-			<title>devaTest Case</title>
+			<title>Application Software</title>
 			<item identifier="item_knowdlPublishId_rm-709" identifierref="resource_knowdlPublishId_rm-709">
-				<title>devaTest Case</title>
+				<title>Application Software</title>
         
 			</item>
 		</organization>

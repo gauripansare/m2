@@ -65,8 +65,5 @@ var _ScormUtility = (function () {
             var maxscr = scorm.set("cmi.score.max", "100.00");
             var setStatus = scorm.set("cmi.score.raw", "" + scoreval);
         }
-
-
-
     }
 })();
