@@ -60,24 +60,27 @@ $(document).on("click", ".hintlink", function (event) {
         $(".hintlink").removeClass("expanded")
         $(".hintlink").attr("aria-expanded", "false")
         $(".hintcontainer").slideUp(100);
+        $(".pageheading").focus();
     }
     else {
         $(".hintcontainer").slideDown(100, function () {
             $(".hintlink").addClass("expanded");
             $(".hintlink").attr("aria-expanded", "true");
+            $(".hintcontainer .hintcontent").find("p:first").attr("tabindex","-1")
+            $(".hintcontainer .hintcontent").find("p:first").focus();
         });
     }
-    $(".hintlink").focus();
-
+   
 });
 $(document).on("click", ".closehintlink", function (event) {
 
     $(".hintlink").removeClass("expanded")
     $(".hintlink").attr("aria-expanded", "false")
-    $(".hintcontainer").slideUp(100,function(){$(".hintlink").focus();});
+    $(".hintcontainer").slideUp(100,function(){$("h2.pageheading").focus();});
 
 
 });
+
 $(document).on("keydown", "input.EmbededElement", function (event) {
     if ($(this).attr("disabled") || $(this).hasClass("disabled")) {
         event.preventDefault();

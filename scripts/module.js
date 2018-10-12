@@ -125,7 +125,8 @@ var _ModuleCommon = (function () {
                         var tEntry = reviewData.textEntry[i].trim().toLowerCase();
                         if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
                             if (reviewData.isCorrect && i == 0) {
-                                $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                                $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>");
+                                $(".textentryaccessibility").text("Correct url entered "+reviewData[i].textEntry[i])
                             }
                             else {
                                 $(".textentryreview2").html("<span class='OpenSansFont'  style='color:green;font-weight:bold;font-size: 13px;padding-left:5px; '>" + reviewData.textEntry[i] + "</span>");
@@ -134,6 +135,7 @@ var _ModuleCommon = (function () {
                         }
                         else {
                             $(".textentryreview1").html("<span class='OpenSansFont'  style='color:red;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                            $(".textentryaccessibility").text("Incorrect url entered " + reviewData.textEntry[0] + " Correct url "+reviewData.textEntry[1])
                         }
                     }
 
@@ -330,6 +332,9 @@ var _ModuleCommon = (function () {
             if (_Navigator.IsAnswered()) {               
                 this.DisplayInstructorReviewMode();
             }
+            $("h2.pageheading").attr("tabindex","-1");
+           
+           
         },
         LoadHotSpot: function () {
            
@@ -564,6 +569,7 @@ var _ModuleCommon = (function () {
             {
                 $(".divHotSpot").removeClass("disabled");
                 $(".divHotSpot").removeClass("hotspotclicked");
+                $(".divHotSpot").k_enable();
             }
             _Navigator.SetBookmarkData();
         },

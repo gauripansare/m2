@@ -59,7 +59,10 @@
     .intro-content {
         margin: 0% 4%;
     }
-
+    .input-url {
+        width: 325px !important;
+        height: 16px;
+    }
     h1 {
         font-size: 22px;
     }

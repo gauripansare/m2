@@ -92,12 +92,14 @@
     height: auto;
     position: relative;
     display:flexbox;
-    justify-content:center
+    justify-content:center; 
+   
 }
 
 .activityimg {
     width: 796px;
-    border:1px solid #cccccc;
+    border:1px solid #cccccc;    
+    
 }
 
 .activityContainer {
@@ -137,6 +139,7 @@
     outline: none;
     border: none;
 }
+
 
 .divHotSpot:hover,.divHotSpotdbl:hover {
     box-shadow: 0 2px 16px -5px #000;

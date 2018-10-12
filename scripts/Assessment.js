@@ -70,9 +70,7 @@ var _Assessment = (function () {
 				gRecordData.Questions[currentQuestionIndex].Options = this.Shuffle(currQustion.Options)
 			}
 			currQustion.Options = gRecordData.Questions[currentQuestionIndex].Options;
-			$("#linkprevious").k_enable();
-			$("#linknext").k_disable();
-
+		
 			for (var i = 0; i < currQustion.Options.length; i++) {
 				optionObj = $(".Option").clone();
 				optionObj.attr("id", "label" + currQustion.Options[i].OptionId)
@@ -84,8 +82,7 @@ var _Assessment = (function () {
 				optionObj.show();
 				$(".question-band").append(optionObj)
 				if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
-					$("#" + currQustion.Options[i].OptionId).trigger("click");
-					$("#linknext").k_enable()
+					$("#" + currQustion.Options[i].OptionId).trigger("click");				
 					isFirstQAnswered = true
 				}
 				if (isIE11version || isIEEdge) {
@@ -98,8 +95,13 @@ var _Assessment = (function () {
 			$(".intro-content-question").fadeIn(600)
 
 			$("#Questioninfo").focus();
-
-
+			if (gRecordData.Status != "Completed") {
+				$("#linknext").k_disable();
+				if(currentQuestionIndex != 0)
+				{
+					$("#linkprevious").k_disable();
+				}
+			}
 			if (_Navigator.IsPresenterMode()) {
 				this.ShowQuestionPresenterMode();
 				$("#linknext").k_enable()

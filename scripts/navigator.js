@@ -363,6 +363,21 @@ var _Navigator = (function () {
                         if ($(".activityimg").length > 0) {
                             $('.activityimg').load(function () {
                                 OnPageLoad();
+                                if (_currentPageObject.pageId == "p2") {
+                                    $("#titleheader").focus();
+                                }
+                                else {
+                                    if (_currentPageId != "p28") {
+                                        $("#progressdiv").focus();
+                                    }
+                                    else {
+                                        $("#Questioninfo").focus();
+                                    }
+                                }
+                                if (presentermode) {
+                                    _ModuleCommon.PresenterMode();
+                                }
+        
                             });
                         }
 
@@ -375,24 +390,13 @@ var _Navigator = (function () {
                         if (_currentPageObject.hideHint != undefined && _currentPageObject.hideHint) {
                             $("#hintdiv").hide();
                         }
-                        if (presentermode) {
-                            _ModuleCommon.PresenterMode();
-                        }
-
+                       
                         $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
+                        
                         if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
                             $('#footer-navigation').css('display', 'table');
                         }
-                        if (_currentPageObject.pageId == "p2")
-                            $("#titleheader").focus();
-                        else {
-                            if (_currentPageId != "p28") {
-                                $("#progressdiv").focus();
-                            }
-                            else {
-                                setReader("Questioninfo")
-                            }
-                        }
+
                         _Navigator.SetBookmarkData();
                     });
                 })
