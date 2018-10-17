@@ -111,7 +111,7 @@ var _Assessment = (function () {
 			}
 			_Navigator.UpdateProgressBar();
 			$(".assessmentSubmit").k_disable();
-			_Navigator.SetBookmarkData();
+			_Navigator.GetBookmarkData();
 		},
 		ShowQuestionPresenterMode: function () {
 			var currQuestion = gRecordData.Questions[currentQuestionIndex];
@@ -270,7 +270,7 @@ var _Assessment = (function () {
 			
 			$("#ScoreSummary").text("Score: " + perscore + "%");
 
-			$("#summaryheading").focus();
+			$("#progressdiv").focus();
 		},
 		SetScore: function (perscore) {
 			if (isscorm) {

@@ -1,4 +1,4 @@
-var isscorm = false;
+
 var scorm = pipwerks.SCORM;
 var _ScormUtility = (function () {
     return {

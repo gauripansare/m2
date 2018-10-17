@@ -112,16 +112,17 @@
     width: 100%;
 }
 
-.input-url {
+.input-url,.textentryaccessibility {
     width: 335px;
     height: 19px;
     position: absolute;
     top: 137px;
     left: 230px;
     padding-left:5px;
+    
 }
 
-.textentryreview {
+.textentryreview{
     width: 367px;
     height: 25px;
     position: absolute;
@@ -169,6 +170,10 @@
 
 .greenspan {
     color: #01662C;
+    font-weight: bold;
+}
+.redspan {
+    color: #B22222;
     font-weight: bold;
 }
 

@@ -36,10 +36,10 @@ var _ModuleCommon = (function () {
             }
 
         },
-        GetReviewData:function(){
+        GetReviewData: function () {
             return reviewData;
         },
-        SetReviewData:function(rData){
+        SetReviewData: function (rData) {
             reviewData = rData;
         },
         GetPageDetailData: function () {
@@ -65,20 +65,20 @@ var _ModuleCommon = (function () {
                 fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
                 $("#div_feedback").show();
                 $("#div_feedback").css("display", "inline-block");
-             
+
                 $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
                     //this.SetFeedbackTop()
                     $('html,body').animate({ scrollTop: 0 }, 0, function () { });
                 });
-               
+
             }
-            
+
         },
         DisplayInstructorReviewMode: function () {
             $(".reviewDiv").remove();
             var pageDetailData = this.GetPageDetailData();
             if (pageDetailData != undefined && pageDetailData.EmbedSettings != undefined) {
-                
+
                 this.InstructorReviewModeForTextEntry();
             }
             else {
@@ -89,7 +89,7 @@ var _ModuleCommon = (function () {
                         var appendImage = $(".wrapperimage");
                         var ht = appendImage.height();
                         if (ht < 597) {
-                            ht = 597;
+                            ht = 595;
                         }
                         while ((posObj.posY + 40) > ht) {
                             posObj.posY = posObj.posY - 2;
@@ -108,7 +108,7 @@ var _ModuleCommon = (function () {
                 }
             }
             this.ShowFeedbackReviewMode();
-            
+
             $(".divHotSpot").addClass("disabled");
             $(".divHotSpot").attr("aria-disabled", "true");
             $(".divHotSpot").attr("disabled", "true");
@@ -125,29 +125,30 @@ var _ModuleCommon = (function () {
                         var tEntry = reviewData.textEntry[i].trim().toLowerCase();
                         if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
                             if (reviewData.isCorrect && i == 0) {
-                                $(".textentryreview1").html("<span class='OpenSansFont' style='color:green;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>");
-                                $(".textentryaccessibility").text("Correct url entered "+reviewData[i].textEntry[i])
+                                $(".textentryreview1").html("<span class='OpenSansFont greenspan' style='font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>");
+                                $(".textentryaccessibility").text("Correct url entered " + reviewData.textEntry[i])
                             }
                             else {
-                                $(".textentryreview2").html("<span class='OpenSansFont'  style='color:green;font-weight:bold;font-size: 13px;padding-left:5px; '>" + reviewData.textEntry[i] + "</span>");
+                                $(".textentryreview2").html("<span class='OpenSansFont greenspan'  style='font-weight:bold;font-size: 13px;padding-left:5px; '>" + reviewData.textEntry[i] + "</span>");
                                 $(".textentryreview2").show();
                             }
                         }
                         else {
-                            $(".textentryreview1").html("<span class='OpenSansFont'  style='color:red;font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
-                            $(".textentryaccessibility").text("Incorrect url entered " + reviewData.textEntry[0] + " Correct url "+reviewData.textEntry[1])
+                            $(".textentryreview1").html("<span class='OpenSansFont redspan'  style='font-weight:bold;font-size: 13px; '>" + reviewData.textEntry[i] + "</span>")
+                            $(".textentryaccessibility").text("Incorrect url entered " + reviewData.textEntry[0] + " Correct url " + reviewData.textEntry[1])
                         }
                     }
 
                 }
                 $(".textentryreview1").show();
+                $(".textentryaccessibility").show();
             }
         },
         DisplayUserReviewMode: function () {
             $(".reviewDiv").remove();
             var pageDetailData = this.GetPageDetailData();
             if (pageDetailData != undefined && pageDetailData.EmbedSettings != undefined) {
-                
+
                 this.DisplayReviewModeForTextEntry();
             }
             else {
@@ -173,14 +174,14 @@ var _ModuleCommon = (function () {
                 }
             }
             this.ShowFeedbackReviewMode();
-          
+
         },
         DisplayReviewModeForTextEntry: function () {
             $(".EmbededElement").hide();
             var reviewData = this.GetPageReviewData();
             var pageDetailData = this.GetPageDetailData();
             if (reviewData != undefined && reviewData.textEntry != undefined && reviewData.textEntry.length > 0) {
-               
+
                 if (reviewData.textEntry[reviewData.textEntry.length - 1] != undefined && reviewData.textEntry[reviewData.textEntry.length - 1] != "") {
                     var tEntry = reviewData.textEntry[reviewData.textEntry.length - 1].trim().toLowerCase();
                     if (pageDetailData.EmbedSettings.validatearray.indexOf(tEntry) >= 0) {
@@ -207,14 +208,13 @@ var _ModuleCommon = (function () {
                 rposX = (event.pageX - posX);
                 rposY = (event.pageY - posY);
             }
-            if(rposX <0 || rposY <0){//gp if module is attmpted using accessibility
+            if (rposX < 0 || rposY < 0) {//gp if module is attmpted using accessibility
                 rposX = hotspotObj.position().left + 20;
                 rposY = hotspotObj.position().top + 20;
             }
             var currentPageData = _Navigator.GetCurrentPage();
             var page = this.GetPageDetailData();
-            if (page.EmbedSettings != undefined)
-            {
+            if (page.EmbedSettings != undefined) {
                 return;
             }
             for (var r = 0; r < reviewData.length; r++) {
@@ -324,24 +324,23 @@ var _ModuleCommon = (function () {
         OnPageLoad: function () {
             this.LoadHotSpot();
             this.ApplycontainerWidth();
-            if( $("#div_feedback").length > 0)
-            {
+            if ($("#div_feedback").length > 0) {
                 $("#div_feedback").hide();
-               
+
             }
-            if (_Navigator.IsAnswered()) {               
+            if (_Navigator.IsAnswered()) {
                 this.DisplayInstructorReviewMode();
             }
-            $("h2.pageheading").attr("tabindex","-1");
-           
-           
+            $("h2.pageheading").attr("tabindex", "-1");
+
+
         },
         LoadHotSpot: function () {
-           
+
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = _PData[currentPageData.pageId];
             var aceessTextforImg = currentPageData.accessText;
-            $(".activityimg").attr("alt",aceessTextforImg)
+            $(".activityimg").attr("alt", aceessTextforImg)
             if (pageData != undefined) {
 
                 var hotspotdata = pageData.ImageHotSpots;
@@ -359,27 +358,28 @@ var _ModuleCommon = (function () {
                         var pleft = hotspotdata.Hotspots[i].left;
                         var ptop = hotspotdata.Hotspots[i].top;
                         var accessText = hotspotdata.Hotspots[i].accessText;
-                       
+
                         if ((hotspotdata.Hotspots[i].left + "").indexOf("px") != -1) {
                             pleft = getPerc(Number(hotspotdata.Hotspots[i].left.replace("px", "").replace("%", "")), orw) + "%";
                             ptop = getPerc(Number(hotspotdata.Hotspots[i].top.replace("px", "").replace("%", "")), orh) + "%";
                         }
-                                
+
                         htmlForDivHotspotImage += "<button type='button' hsId='" + hsId + "'  id='divHotspots" + i + "_" + hsId + "' class='divHotSpot' style=' width:" + pwdth + ";height:" + phight + ";left:" + pleft + ";top:" + ptop + ";' action='" + hotspotdata.Hotspots[i].action + "' role='button' aria-label='" + accessText + "'/>";
+
                     }
-                   
+
                     $(".wrapperimage").append(htmlForDivHotspotImage)
+
                 }
 
             }
         },
-        PresenterMode:function(){
+        PresenterMode: function () {
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
-           
 
-            if(currentPageData.pageId == "p3" && pageData.EmbedSettings!=undefined)
-            {
+
+            if (currentPageData.pageId == "p3" && pageData.EmbedSettings != undefined) {
                 $("input[type='text']").addClass("greenspan");
                 $("input[type='text']").val(pageData.EmbedSettings.validatearray[0]);
                 $("input[type='text']").k_disable();
@@ -387,12 +387,12 @@ var _ModuleCommon = (function () {
             }
             $(".divHotSpot").addClass("hotspotclicked");
             $(".divHotSpot").addClass("disabled");
-           
-            
+
+
             $("#linknext").k_enable();
         },
         ApplycontainerWidth: function () {
-            
+
             var innerWidth = $(window).width();
 
             $("#header-title img").attr("src", "assets/images/logo.png")
@@ -419,6 +419,9 @@ var _ModuleCommon = (function () {
             this.ApplycontainerWidth();
         },
         HotspotClick: function (_hotspot, event) {
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnInteraction("Hotspot click.")
+            }
             if (_Navigator.IsAnswered())
                 return;
             var action = _hotspot.attr("action")
@@ -449,7 +452,7 @@ var _ModuleCommon = (function () {
                 default:
                     break;
             }
-            _Navigator.SetBookmarkData();
+            _Navigator.GetBookmarkData();
         },
         SetFeedbackTop: function () {
             var ptop = Number($("#div_feedback").position().top);
@@ -460,16 +463,19 @@ var _ModuleCommon = (function () {
             }
         },
         InputFeedback: function () {
-            
+
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnFeedback()
+            }
             var pageData = this.GetPageDetailData();
             var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + pageData.EmbedSettings.feedbackurl;
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
-            
+
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
                 // this.SetFeedbackTop()   
-                $("#div_feedback p:first").attr("tabindex","-1")            
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {                    
+                $("#div_feedback p:first").attr("tabindex", "-1")
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
                     $("#div_feedback p:first").focus();
                 });
             });
@@ -477,7 +483,9 @@ var _ModuleCommon = (function () {
             this.EnableNext();
         },
         HotspotFeedback: function (_hotspot) {
-            
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnFeedback()
+            }
             var pageData = this.GetPageDetailData();
             var url = "";
             if (pageData.ImageHotSpots != undefined) {
@@ -490,13 +498,13 @@ var _ModuleCommon = (function () {
             var fdbkUrl = _Settings.dataRoot + "feedbackdata/" + url;
             $("#div_feedback").show();
             $("#div_feedback").css("display", "inline-block");
-            
+
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
                 // this.SetFeedbackTop()   
-                $("#div_feedback p:first").attr("tabindex","-1")            
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {                  
+                $("#div_feedback p:first").attr("tabindex", "-1")
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
                     $("#div_feedback p:first").focus();
-                 });
+                });
             });
             $(".divHotSpot").k_disable();
             this.EnableNext();
@@ -510,6 +518,9 @@ var _ModuleCommon = (function () {
         InputEnter: function (inputtext) {
             if (_Navigator.IsAnswered())
                 return;
+            if (_Navigator.IsRevel()) {
+                LifeCycleEvents.OnInteraction("Input Enter click.")
+            }
             if ($.trim(inputtext.val()) != "") {
                 var pageData = this.GetPageDetailData();
                 var vtextarr = pageData.EmbedSettings.validatearray;
@@ -565,37 +576,36 @@ var _ModuleCommon = (function () {
                         break;
                 }
             }
-            else
-            {
+            else {
                 $(".divHotSpot").removeClass("disabled");
                 $(".divHotSpot").removeClass("hotspotclicked");
                 $(".divHotSpot").k_enable();
             }
-            _Navigator.SetBookmarkData();
+            _Navigator.GetBookmarkData();
         },
         AppendFooter: function () {
             if ($(".presentationModeFooter").length == 0) {
-             
-              var str = '<div class="presentationModeFooter">Presentation Mode</div>';
-              $("footer").append($(str));
-              $("footer").show().css("display","inline");
-              $("#linknext").k_enable();
-          }
-          else{
 
-            $("footer").show().css("display","inline");
-          }
-      },
-      AppendCss:function(){
-            if(isIE11version){
-                $(".hintDiv").css("margin-left","383px")
+                var str = '<div class="presentationModeFooter">Presentation Mode</div>';
+                $("footer").append($(str));
+                $("footer").show().css("display", "inline");
+                $("#linknext").k_enable();
+            }
+            else {
+
+                $("footer").show().css("display", "inline");
+            }
+        },
+        AppendCss: function () {
+            if (isIE11version) {
+                $(".hintDiv").css("margin-left", "383px")
 
             }
-            if(isAndroid || iOS){
-                 $("#footer-navigation ").css("display","");
+            if (isAndroid || iOS) {
+                $("#footer-navigation ").css("display", "");
 
             }
-      }
+        }
     }
 })();
 
@@ -605,17 +615,6 @@ var _ModuleCommon = (function () {
 $(document).ready(function () {
     debugger;
     _Navigator.Initialize();
-    _Navigator.GetBookmarkData();
-    var bookmarkpage = _Navigator.GetBookMarkPage();
-    
-    if(bookmarkpage!=undefined && bookmarkpage!="" )
-    {
-        _Navigator.LoadPage(bookmarkpage)
-    }
-    else
-    {
-        _Navigator.Start();
-    }
-   $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
+    $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });
 

@@ -79,6 +79,10 @@
     h1 {
         font-size: 20px;
     }
+    .input-url {
+        width: 325px !important;
+        height: 19px;
+    }
 
     .header-informarion p, .header-informarion div, .header-informarion span, .closehintlink {
         font-size: 13px;

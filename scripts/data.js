@@ -22,7 +22,7 @@ var _PData = {
               {
                   HotspotId: 1,
                   width: "4.1457286432160805%",
-                  height: "5.192629815745393%",
+                  height: "4.9%",
                   top: "94.13735343383584%",
                   left: "40.766331658291456%",
                   widthPX: "33px",
@@ -492,8 +492,8 @@ var _PData = {
               {
                 HotspotId: 1,
                 width: "4.0201005025125625%",
-                height: "1.9484600879949718%",
-                top: "97.80012570710245%",
+                height: "2%",
+                top: "97.6%",
                 left: "45.79145728643216%",
                 widthPX: "32px",
                 heightPX: "35px",
@@ -590,7 +590,7 @@ var _PData = {
                 leftPX: "269.515625px",
                 action: "feedback",
                 feedbackurl: "feedbackp25.htm",  
-                accessText: "Local Disk (C:)",
+                accessText: "Local Disk C drive",
                 score: "",
                 "GroupName": "grp13",
                 "ActionName": "click"
@@ -603,8 +603,8 @@ var _PData = {
             "Hotspots": [
               {
                 HotspotId: 1,                
-                width: "3.4047919293820934%",
-                height: "5.546218487394958%",
+                width: "4%",
+                height: "4.6%",
                 top: "94.45378151260503%",
                 left: "41.04665825977301%",
                 widthPX: "27px",

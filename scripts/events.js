@@ -55,12 +55,13 @@ $(document).on("click", "#linknext", function (event) {
 });
 
 $(document).on("click", ".hintlink", function (event) {
-    
+   var open = "open;"
     if ($(this).hasClass("expanded")) {
         $(".hintlink").removeClass("expanded")
         $(".hintlink").attr("aria-expanded", "false")
         $(".hintcontainer").slideUp(100);
         $(".pageheading").focus();
+        open = "close";
     }
     else {
         $(".hintcontainer").slideDown(100, function () {
@@ -70,6 +71,9 @@ $(document).on("click", ".hintlink", function (event) {
             $(".hintcontainer .hintcontent").find("p:first").focus();
         });
     }
+    if (_Navigator.IsRevel()) {
+        LifeCycleEvents.OnInteraction("Hint button click. Hint " + open)
+    }
    
 });
 $(document).on("click", ".closehintlink", function (event) {
@@ -77,7 +81,9 @@ $(document).on("click", ".closehintlink", function (event) {
     $(".hintlink").removeClass("expanded")
     $(".hintlink").attr("aria-expanded", "false")
     $(".hintcontainer").slideUp(100,function(){$("h2.pageheading").focus();});
-
+    if (_Navigator.IsRevel()) {
+        LifeCycleEvents.OnInteraction("Hint button click. Hint closed")
+    }
 
 });
 
@@ -132,9 +138,12 @@ $(document).on("change", ".assessmentradio", function (event) {
     $(".assessmentSubmit").k_enable();    
 });
 $(document).on("click", ".assessmentSubmit", function (event) {
+    if (_Navigator.IsRevel()) {
+        LifeCycleEvents.OnSubmit();
+    }
     gRecordData.Questions[currentQuestionIndex].UserSelectedOptionId = $("input[type='radio']:checked").attr("id") ;
     gRecordData.Questions[currentQuestionIndex].IsAnswered = true;
-    _Navigator.SetBookmarkData();
+    _Navigator.GetBookmarkData();
     _Navigator.Next();
 });
 $(document).on('click', ".inputcircle", function (event) {
