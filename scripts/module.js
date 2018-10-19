@@ -383,25 +383,31 @@ var _ModuleCommon = (function () {
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
             var appendImage = $(".wrapperimage");
-            if (currentPageData.pageId == "p17" && pageData.EmbedSettings != undefined) {
+            if (currentPageData.pageId == "p3" && pageData.EmbedSettings.validatearray != undefined) {
                 $("input[type='text']").addClass("greenspan");
                 $("input[type='text']").val(pageData.EmbedSettings.validatearray[0]);
                 $("input[type='text']").k_disable();
-            }
-            else {
                 var posObj = pageData.ImageHotSpots.Hotspots[0];
                 var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
-                if (currentPageData.pageId == "p6" || currentPageData.pageId == "p10") {
-                    $(".divHotSpotdbl").addClass("hotspotclicked");
-                    $(".divHotSpotdbl").addClass("disabled");
-                    $(".divHotSpot").addClass("disabled");
+                $(".divHotSpot").addClass("hotspotclicked");
+                $(".divHotSpot").addClass("disabled");
+                appendImage.append(_div);
+            }
+            else if (currentPageData.pageId == "p6") {
+                $(".divHotSpot").addClass("hotspotclicked");
+                $(".divHotSpot").addClass("disabled");
+                for (var i = 0; i < pageData.ImageHotSpots.Hotspots.length; i++) {
+                    var posObj = pageData.ImageHotSpots.Hotspots[i];
+                    var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
                     appendImage.append(_div);
                 }
-                else {
-                    $(".divHotSpot").addClass("hotspotclicked");
-                    $(".divHotSpot").addClass("disabled");
-                    appendImage.append(_div);
-                }
+            }
+            else{
+                var posObj = pageData.ImageHotSpots.Hotspots[0];
+                var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                $(".divHotSpot").addClass("hotspotclicked");
+                $(".divHotSpot").addClass("disabled");
+                appendImage.append(_div);
             }
 
 

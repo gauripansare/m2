@@ -390,7 +390,7 @@ var _Navigator = (function () {
                                       $("#Questioninfo").focus();
                                     }
                                 }
-                                if (_Navigator.IsPresenterMode() && _currentPageObject.pageId !="p3") {
+                                if (_Navigator.IsPresenterMode()) {
                                     _ModuleCommon.PresenterMode();
                                 }
 
