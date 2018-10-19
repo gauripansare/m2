@@ -1,13 +1,14 @@
-﻿var isscorm = true;
-var isrevel = false;
+﻿//var isscorm = false;
+//var isrevel = false;
 //This api will contain navigation logic and page load.
 //It will also handle the question navigation if the page is having multiple questions.
 var _Navigator = (function () {
+    var packageType = "presenter";//presenter/scorm/revel
     var _currentPageId = "";
     var _currentPageObject = {};
     var progressLevels = [32];
     var totalsimscore = 18;
-    var presentermode = false;
+    //var presentermode = false;
     var bookmarkpageid = "";
     var _NData = {
         "p1": {
@@ -300,8 +301,14 @@ var _Navigator = (function () {
             $("#header-title").addClass("startpage");
         }
         _ModuleCommon.AppendCss();
+        if (_currentPageObject.accessText != undefined) {
+            $(".activityimg").attr("alt", _currentPageObject.accessText);
+        }
         _ModuleCommon.OnPageLoad();
-
+        if (_Navigator.IsPresenterMode()) {
+            $("#linknext").k_enable();
+            $(".start-btn").k_disable();
+        }
 
     }
     return {
@@ -310,6 +317,9 @@ var _Navigator = (function () {
         },
         Start: function () {
             this.LoadPage("p1");
+            if (this.IsPresenterMode()) {
+                _ModuleCommon.AppendFooter();
+            }
         },
         LoadPage: function (pageId, jsonObj) {
             if (_Navigator.IsRevel() && _currentPageId !=undefined && _currentPageId !="") {
@@ -331,7 +341,7 @@ var _Navigator = (function () {
                 $("#linknext").k_enable();
                 $("footer").hide();
                 $("#header-progress").hide();
-                if (presentermode)
+                if (this.IsPresenterMode())
                     _ModuleCommon.AppendFooter();
 
             }
@@ -380,7 +390,7 @@ var _Navigator = (function () {
                                       $("#Questioninfo").focus();
                                     }
                                 }
-                                if (presentermode) {
+                                if (_Navigator.IsPresenterMode() && _currentPageObject.pageId !="p3") {
                                     _ModuleCommon.PresenterMode();
                                 }
 
@@ -458,7 +468,7 @@ var _Navigator = (function () {
                     currentQuestionIndex = currentQuestionIndex + 1
                     $("#Questioninfo").show();
                     _Assessment.ShowQuestion()
-                    if (gRecordData.Status != "Completed") {
+                    if (gRecordData.Status != "Completed" && !this.IsPresenterMode()) {
                         $("#linknext").k_disable();
                         $("#linkprevious").k_disable();
                     }
@@ -560,11 +570,19 @@ var _Navigator = (function () {
             return false;
 
         },
+        CheckIfPageLoaded: function (pageid) {
+            return _NData[pageid].isLoaded != undefined && _NData[pageid].isLoaded ? true : false;
+        },
         SetPresenterMode: function (val) {
             presentermode = val;
         },
         IsPresenterMode: function () {
-            return presentermode;
+            if(packageType == "presenter"){
+                return true;
+            }
+            else{
+                return false;
+            }
         },
         SetBookmarkData: function () {
             var bookmarkdata;
@@ -635,13 +653,13 @@ var _Navigator = (function () {
             return bookmarkpageid;
         },
         Initialize: function () {
-            if (isscorm) {
+            if (packageType == "scorm") {
                 _ScormUtility.Init();
                 _Navigator.SetBookmarkData();
                 //bookmarkpageid = _ScormUtility.GetBookMark();
                 this.GotoBookmarkPage();
             }
-            else if (isrevel) {
+            else if (packageType == "revel") {
                 g_tempIntv = setInterval(function () {
                     if ((typeof piSession != 'undefined' && typeof piSession.currentToken() != 'undefined' && piSession.currentToken() != null)) {
                         clearInterval(g_tempIntv);
@@ -687,17 +705,20 @@ var _Navigator = (function () {
             }
         },
         IsScorm: function () {
-            if (isscorm == true)
+            if (packageType == "scorm")
                 return true;
 
             return false;
 
         },
         IsRevel: function () {
-            if (isrevel == true)
+            if (packageType == "revel")
                 return true;
             return false;
-        }
+        },
+        GetPackageType: function () {
+            return packageType;
+        },
     };
 })();
 

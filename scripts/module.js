@@ -330,6 +330,11 @@ var _ModuleCommon = (function () {
             }
             if (_Navigator.IsAnswered()) {
                 this.DisplayInstructorReviewMode();
+                $(".divHotSpot, .divHotSpotdbl").addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+                //this.ViewTextEntryInReviewMode();
+            }
+            if (isFirefox) {
+                $('#footer-navigation').css('display', 'table');
             }
             $("h2.pageheading").attr("tabindex", "-1");
 
@@ -377,19 +382,33 @@ var _ModuleCommon = (function () {
         PresenterMode: function () {
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
-
-
-            if (currentPageData.pageId == "p3" && pageData.EmbedSettings != undefined) {
+            var appendImage = $(".wrapperimage");
+            if (currentPageData.pageId == "p17" && pageData.EmbedSettings != undefined) {
                 $("input[type='text']").addClass("greenspan");
                 $("input[type='text']").val(pageData.EmbedSettings.validatearray[0]);
                 $("input[type='text']").k_disable();
-
             }
-            $(".divHotSpot").addClass("hotspotclicked");
-            $(".divHotSpot").addClass("disabled");
+            else {
+                var posObj = pageData.ImageHotSpots.Hotspots[0];
+                var _div = "<div class='reviewDiv Correct' style='z-index:5;width:39px;height:39px;position:absolute;left:" + posObj.left + ";top:" + posObj.top + ";'><img src='assets/images/review-correct.png' style='width:39px;height:35px;' /></div>";
+                if (currentPageData.pageId == "p6" || currentPageData.pageId == "p10") {
+                    $(".divHotSpotdbl").addClass("hotspotclicked");
+                    $(".divHotSpotdbl").addClass("disabled");
+                    $(".divHotSpot").addClass("disabled");
+                    appendImage.append(_div);
+                }
+                else {
+                    $(".divHotSpot").addClass("hotspotclicked");
+                    $(".divHotSpot").addClass("disabled");
+                    appendImage.append(_div);
+                }
+            }
+
 
 
             $("#linknext").k_enable();
+            _Navigator.SetPageStatus(true);
+            _Navigator.UpdateProgressBar();
         },
         ApplycontainerWidth: function () {
 
