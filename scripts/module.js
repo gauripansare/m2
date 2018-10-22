@@ -2,6 +2,7 @@
 var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 var ipad = !!navigator.platform && /iPad|iPod/.test(navigator.platform);
 var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+var Macos = navigator.userAgent.indexOf('Mac');
 var isIEEdge = /Edge/.test(navigator.userAgent);
 var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
 var isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
