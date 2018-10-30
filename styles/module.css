@@ -224,7 +224,7 @@
         -webkit-box-sizing: border-box;
     }
     
-    .assessmentradio:checked + .inputcircle:before {
+    .assessmentradio:checked + .inpputtext .inputcircle:before {
         content: '';   
         height: 15px;
         width: 15px;
@@ -238,11 +238,11 @@
         -webkit-border-radius: 100%;
     }
     
-    .assessmentradio:checked + .inputcircle {
+    .assessmentradio:checked + .inpputtext .inputcircle, #Summary .assessmentradio:checked + .inpputtext .inputcircle {
         color: #047a9c;
     }
     
-    #questioninnerwrapper.inputcircle , #Summary.inputcircle {
+    #questioninnerwrapper .inputcircle , #Summary .inputcircle {
         position: relative;
         padding-left: 6px;
         cursor: pointer;
@@ -306,27 +306,34 @@
     margin: 0 10%;
 }
 
-    .submitdiv{
-        float: left;
-        width: 100%;
-        margin-top: 35px;
-        margin-bottom: 35px;
-       
-    }
-    #QuetionText{
-        margin-top: 20px;
-        padding-top: 20px;
-        padding-right: 10px;
-    }
-    .question-band{
-        float: left;
-        margin-left: 8%;
-    }
-   .quetiontext{
-       margin-left: 20px;
-   }
-
-   /*Presenter Mode css start*/
+.submitdiv{
+    float: left;
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    
+}
+#QuetionText{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-right: 10px;
+}
+.question-band{
+    float: left;
+    margin-left: 8%;
+    position: relative;
+}
+.quetiontext{
+    margin-left: 20px;
+}
+.inpputtext{
+    display: block;
+    margin: 5px 0;
+}
+#Summary .inpputtext{
+    margin: 0px;
+}
+/*Presenter Mode css start*/
 .presentationModeFooter {
     display: inline-block;
     background-color: #1a76cb;

@@ -322,6 +322,7 @@ var _Navigator = (function () {
             }
         },
         LoadPage: function (pageId, jsonObj) {
+             $(".hintcontainer").hide()
             if (_Navigator.IsRevel() && _currentPageId !=undefined && _currentPageId !="") {
                LifeCycleEvents.OnUnloadFromPlayer()
             }
@@ -396,12 +397,16 @@ var _Navigator = (function () {
 
                             });
                         }
+                        else
+                        {
+                            OnPageLoad();
+                        }
 
                         if (_currentPageId == "p28")//  change to assessment id
                         {
                             _Assessment.ShowQuestion();
                         }
-
+                       
                         $("#hintdiv").show();
                         if (_currentPageObject.hideHint != undefined && _currentPageObject.hideHint) {
                             $("#hintdiv").hide();

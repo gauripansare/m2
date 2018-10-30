@@ -76,26 +76,28 @@ var _Assessment = (function () {
 				optionObj.attr("id", "label" + currQustion.Options[i].OptionId)
 				optionObj.find("input").attr("id", currQustion.Options[i].OptionId)
 				optionObj.find("input").attr("name", "radiobutton")
-				optionObj.find(".inpputtext").html(currQustion.Options[i].OptionText)
+				optionObj.find(".inpputtext .ltext").html(currQustion.Options[i].OptionText)
 				optionObj.find(".inpputtext").attr("for", currQustion.Options[i].OptionId)
 				optionObj.removeClass("Option")
 				optionObj.show();
 				$(".question-band").append(optionObj)
+
 				if (currQustion.UserSelectedOptionId == currQustion.Options[i].OptionId) {
 					$("#" + currQustion.Options[i].OptionId).trigger("click");				
 					isFirstQAnswered = true
 				}
-				if (isIE11version || isIEEdge || Macos) {
+				if (isIE11version || isIEEdge || isSafari ) {
 					optionObj.find("input").attr("aria-label", optionObj.find(".inpputtext").text());
 					optionObj.find(".inpputtext").attr("aria-hidden", "true")
 				}
 			}
+			$(".question-band .assessmentradio").unwrap();
 			$("#Questioninfo").text("Performance Check: Mini-Quiz: Question " + parseInt(currentQuestionIndex + 1) + " of 4")
 			//removeCSS("styles/questionPlaceholder.css")
-			if(Macos && !ipad){
-				$("#QuetionText").attr("aria-hidden","true");
-				$("#QuetionText").closest(".questioninnerwrapper").attr("aria-label","question number "+(currentQuestionIndex + 1) +") "+ currQustion.QuestionText);
-			}
+			// if(isSafari && !iOS){
+			// 	$("#QuetionText").attr("aria-hidden","true");
+			// 	$("#QuetionText").closest(".questioninnerwrapper").attr("aria-label","question number "+(currentQuestionIndex + 1) +") "+ currQustion.QuestionText);
+			// }
 			$(".intro-content-question").fadeIn(600)
 
 			$("#Questioninfo").focus();
@@ -142,36 +144,36 @@ var _Assessment = (function () {
 				return item.IsCorrect;
 			})[0];
 
-			var iscorrectimg = $("#" + correctoption.OptionId).closest("div").find(".iscorrect").find("img")
-			$("#" + correctoption.OptionId).closest("div").css("position", "relative");
+			var iscorrectimg = $("#" + correctoption.OptionId).prev("span").find("img")
+			//$("#" + correctoption.OptionId).closest("div").css("position", "relative");
 			iscorrectimg.attr("src", "assets/images/tick-icon-correct-1.png")
 			iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
 			iscorrectimg.closest("span").show();
 			if (correctoption.OptionId == currQuestion.UserSelectedOptionId) {
 				//iscorrectimg.attr("aria-label","Correct option selected");
-				$("#" + correctoption.OptionId).attr("aria-label", "Correct option selected " + $("#" + correctoption.OptionId).closest("div").find(".inpputtext").text())
+				$("#" + correctoption.OptionId).attr("aria-label", "Correct option selected " + $("#" + correctoption.OptionId).next(".inpputtext").text())
 				$("#" + correctoption.OptionId).prop("checked", "true");
-				$("#" + correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
+				$("#" + correctoption.OptionId).next(".inpputtext").attr("aria-hidden", "true")
 			}
 			else {
 
-				$("#" + currQuestion.UserSelectedOptionId).closest("div").css("position", "relative");
-				$("#" + correctoption.OptionId).closest("div").find("input").attr("aria-label", "Correct option " + $("#" + correctoption.OptionId).closest("div").find(".inpputtext").text());
-				iscorrectimg = $("#" + currQuestion.UserSelectedOptionId).closest("div").find(".iscorrect").find("img")
-				$("#" + currQuestion.UserSelectedOptionId).attr("aria-label", "Incorrect option selected " + $("#" + currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").text())
+				//$("#" + currQuestion.UserSelectedOptionId).closest("div").css("position", "relative");
+				$("#" + correctoption.OptionId).attr("aria-label", "Correct option " + $("#" + correctoption.OptionId).next(".inpputtext").text());
+				iscorrectimg = $("#" + currQuestion.UserSelectedOptionId).prev("span").find("img")
+				$("#" + currQuestion.UserSelectedOptionId).attr("aria-label", "Incorrect option selected " + $("#" + currQuestion.UserSelectedOptionId).next(".inpputtext").text())
 				$("#" + currQuestion.UserSelectedOptionId).prop("checked", "true");
 				iscorrectimg.attr("src", "assets/images/incorrect-v1-1.png")
 				iscorrectimg.attr({ "alt": "", "aria-hidden": "true" });
 				//iscorrectimg.attr("aria-label","Incorrect option selected");
 
-				$("#" + correctoption.OptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
-				$("#" + currQuestion.UserSelectedOptionId).closest("div").find(".inpputtext").attr("aria-hidden", "true")
+				$("#" + correctoption.OptionId).next(".inpputtext").attr("aria-hidden", "true")
+				$("#" + currQuestion.UserSelectedOptionId).next(".inpputtext").attr("aria-hidden", "true")
 
 				iscorrectimg.closest("span").show();
 
 			}
 			if (isFirefox) {
-				this.SetCustomarialabelforRadio();
+			//	this.SetCustomarialabelforRadio();
 
 			}
 			$("input[type='radio']").prop("readonly", "readonly");
@@ -179,7 +181,7 @@ var _Assessment = (function () {
 
 			if (isIE11version) {
 				$("input[type='radio']").removeAttr("aria-disabled");
-				$("input[type='radio']").removeAttr("disabled")
+				//$("input[type='radio']").removeAttr("disabled")
 			}
 			$(".assessmentSubmit").hide();
 			$("#linknext").k_enable();
@@ -199,13 +201,13 @@ var _Assessment = (function () {
 					optionObj = $(".Option").clone();
 					optionObj.find("input").attr("id", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 					optionObj.find("input").attr("name", "radiobutton")
-					optionObj.find(".inpputtext").html(currQustion.Options[i].OptionText)
+					optionObj.find(".inpputtext .ltext").html(currQustion.Options[i].OptionText)
 					optionObj.find(".inpputtext").attr("for", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 					optionObj.removeClass("Option");
 					optionObj.find("input").attr("name", radioname)
 					optionObj.show();
 					//questionObj.find(".question-band").append(optionObj)
-					if (isIE11version || isIEEdge) {
+					if (isIE11version || isIEEdge || isSafari) {
 						optionObj.find("input").attr("aria-label", optionObj.find(".inpputtext").text());
 						optionObj.find(".inpputtext").attr("aria-hidden", "true")
 					}
@@ -255,14 +257,14 @@ var _Assessment = (function () {
 
 				questionObj.find(".question-band label").css("position", "relative");
 				if (isFirefox) {
-					this.SetCustomarialabelforRadio();
+				//	this.SetCustomarialabelforRadio();
 
 				}
 				$("#Summary").find("input[type='radio']").prop("readonly", "readonly");
 				$("#Summary").find("input[type='radio']").k_disable();
 				if (isIE11version) {
 					$("#Summary").find("input[type='radio']").removeAttr("aria-disabled");
-					$("#Summary").find("input[type='radio']").removeAttr("disabled")
+					//$("#Summary").find("input[type='radio']").removeAttr("disabled")
 				}
 
 			}
