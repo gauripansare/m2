@@ -29,7 +29,9 @@ $(document).on("click", ".qheight", function (event) {
 var hotspotclicked = false;;
 var hotspot;
 $(document).on("click", ".divHotSpot", function (event) {
-    
+    if (_Navigator.IsPresenterMode()) {
+        return;
+    }
     event.preventDefault();
     $(this).k_disable()
     if (hotspotclicked || _Navigator.IsAnswered())

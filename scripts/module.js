@@ -478,6 +478,7 @@ var _ModuleCommon = (function () {
                 case "feedback":
                     _Navigator.SetPageStatus(true);
                     this.HotspotFeedback(_hotspot);
+                    break;
                 case "inputcheck":
                     _ModuleCommon.InputEnter($("input.EmbededElement"));
                     break;

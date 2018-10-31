@@ -420,8 +420,15 @@ var _Navigator = (function () {
                         if (_currentPageObject.hideHint != undefined && _currentPageObject.hideHint) {
                             $("#hintdiv").hide();
                         }
-                        if(_currentPageObject.hinturl !=undefined)
-                        $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
+                        if( _currentPageObject.hinturl !=undefined)
+                        {
+                            $(".hintlink").k_enable();
+                            $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
+                        }
+                        else
+                        {
+                            $(".hintlink").k_disable();
+                        }
 
                         if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
                             $('#footer-navigation').css('display', 'table');
