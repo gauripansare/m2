@@ -1,6 +1,7 @@
 ﻿
 var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 var ipad = !!navigator.platform && /iPad|iPod/.test(navigator.platform);
+var isiPhone = !!navigator.platform && /iPhone/.test(navigator.platform);
 var isIE11version = !!navigator.userAgent.match(/Trident.*rv\:11\./);
 var isSafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 var isIEEdge = /Edge/.test(navigator.userAgent);
@@ -506,6 +507,10 @@ var _ModuleCommon = (function () {
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
                 // this.SetFeedbackTop()   
                 $("#div_feedback p:first").attr("tabindex", "-1")
+                if(iOS)
+                {
+                    $("#div_feedback p:first").attr("role","text")
+                }
                 $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
                     $("#div_feedback p:first").focus();
                 });
@@ -533,6 +538,10 @@ var _ModuleCommon = (function () {
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
                 // this.SetFeedbackTop()   
                 $("#div_feedback p:first").attr("tabindex", "-1")
+                if(iOS)
+                {
+                    $("#div_feedback p:first").attr("role","text")
+                }
                 $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
                     $("#div_feedback p:first").focus();
                 });
@@ -644,7 +653,7 @@ var _ModuleCommon = (function () {
 
 
 $(document).ready(function () {
-   
+    
     _Navigator.Initialize();
     $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })
 });

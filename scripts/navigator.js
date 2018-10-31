@@ -10,6 +10,7 @@ var _Navigator = (function () {
     var totalsimscore = 18;
     //var presentermode = false;
     var bookmarkpageid = "";
+    var quizpageid = "p28";
     var _NData = {
         "p1": {
             pageId: "p1",
@@ -336,7 +337,7 @@ var _Navigator = (function () {
             $("#header-progress").show();
             $("#header-title").show();
             $("footer").show();
-
+            $('html,body').css({ scrollTop: 0 })
             if (_currentPageObject.isStartPage != undefined && _currentPageObject.isStartPage) {
                 $("#linkprevious").k_disable();
                 $("#linknext").k_enable();
@@ -380,19 +381,27 @@ var _Navigator = (function () {
                         if ($(".activityimg").length > 0) {
                             $('.activityimg').load(function () {
                                 OnPageLoad();
+                                //console.log("loaded"+_currentPageId)
+                              
+                                if (_Navigator.IsPresenterMode()) {
+                                    _ModuleCommon.PresenterMode();
+                                }
                                 if (_currentPageObject.pageId == "p2") {
                                     $("#titleheader").focus();
                                 }
-                                else {
-                                    if (_currentPageId != "p28") {
+                                else if (_currentPageId != quizpageid) {                                     if(isAndroid)
+                                    {
+                                        window.location.hash = '#progressdiv'
+                                    }
+                                    else
+                                    {
+                                        if(isiPhone)
+                                        {
+                                            $("#progressdiv").attr("role","text")
+                                        }
                                         $("#progressdiv").focus();
                                     }
-                                    else {
-                                      $("#Questioninfo").focus();
-                                    }
-                                }
-                                if (_Navigator.IsPresenterMode()) {
-                                    _ModuleCommon.PresenterMode();
+                                   
                                 }
 
                             });
@@ -402,7 +411,7 @@ var _Navigator = (function () {
                             OnPageLoad();
                         }
 
-                        if (_currentPageId == "p28")//  change to assessment id
+                        if (_currentPageId == quizpageid)//  change to assessment id
                         {
                             _Assessment.ShowQuestion();
                         }
@@ -411,7 +420,7 @@ var _Navigator = (function () {
                         if (_currentPageObject.hideHint != undefined && _currentPageObject.hideHint) {
                             $("#hintdiv").hide();
                         }
-
+                        if(_currentPageObject.hinturl !=undefined)
                         $(".hintcontent").load("pagedata/hintdata/" + _currentPageObject.hinturl, function () { });
 
                         if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
@@ -421,6 +430,7 @@ var _Navigator = (function () {
                         _Navigator.GetBookmarkData();
                     });
                 })
+               
             }
 
             if (_Navigator.IsRevel()) {
@@ -447,7 +457,7 @@ var _Navigator = (function () {
             if (_Navigator.IsRevel()) {
                 LifeCycleEvents.OnInteraction("Previous link click.")
             }
-            if (_currentPageObject.pageId == "p28" && typeof (currentQuestionIndex) != 'undefined' && currentQuestionIndex > 0) {
+            if (_currentPageObject.pageId == quizpageid && typeof (currentQuestionIndex) != 'undefined' && currentQuestionIndex > 0) {
                 $("#ReviewIns").hide();
                 $(".intro-content-question").show();
                 $("#Questioninfo").show();
@@ -467,7 +477,7 @@ var _Navigator = (function () {
             }
             $("#linkprevious").k_enable();
             
-            if (_currentPageObject.pageId == "p28") {
+            if (_currentPageObject.pageId == quizpageid) {
 
                 if (typeof (currentQuestionIndex) != 'undefined' && typeof (gRecordData.Questions) != 'undefined' && (currentQuestionIndex + 1) < gRecordData.Questions.length) {
                     currentQuestionIndex = currentQuestionIndex + 1

@@ -331,7 +331,7 @@
     margin: 5px 0;
 }
 #Summary .inpputtext{
-    margin: 0px;
+   /* margin: 0px;*/
 }
 /*Presenter Mode css start*/
 .presentationModeFooter {
@@ -341,5 +341,9 @@
     width: 100%;
     color: white;
     text-align: center;
+}
+.accessibility{
+    font-size: 0;
+    opacity: 0;
 }
 /*presenter Mode css End*/

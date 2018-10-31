@@ -93,11 +93,7 @@ var _Assessment = (function () {
 			}
 			$(".question-band .assessmentradio").unwrap();
 			$("#Questioninfo").text("Performance Check: Mini-Quiz: Question " + parseInt(currentQuestionIndex + 1) + " of 4")
-			//removeCSS("styles/questionPlaceholder.css")
-			// if(isSafari && !iOS){
-			// 	$("#QuetionText").attr("aria-hidden","true");
-			// 	$("#QuetionText").closest(".questioninnerwrapper").attr("aria-label","question number "+(currentQuestionIndex + 1) +") "+ currQustion.QuestionText);
-			// }
+			
 			$(".intro-content-question").fadeIn(600)
 
 			$("#Questioninfo").focus();
@@ -172,15 +168,13 @@ var _Assessment = (function () {
 				iscorrectimg.closest("span").show();
 
 			}
-			if (isFirefox) {
-			//	this.SetCustomarialabelforRadio();
-
-			}
+			
 			$("input[type='radio']").prop("readonly", "readonly");
 			$("input[type='radio']").k_disable();
 
 			if (isIE11version) {
 				$("input[type='radio']").removeAttr("aria-disabled");
+				this.SetCustomarialabelforRadio();
 				//$("input[type='radio']").removeAttr("disabled")
 			}
 			$(".assessmentSubmit").hide();
@@ -200,7 +194,7 @@ var _Assessment = (function () {
 				for (var i = 0; i < currQustion.Options.length; i++) {
 					optionObj = $(".Option").clone();
 					optionObj.find("input").attr("id", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
-					optionObj.find("input").attr("name", "radiobutton")
+					optionObj.find("input").attr("name", "radiobutton"+gRecordData.Questions[b].QuestionId )
 					optionObj.find(".inpputtext .ltext").html(currQustion.Options[i].OptionText)
 					optionObj.find(".inpputtext").attr("for", "question" + gRecordData.Questions[b].QuestionId + currQustion.Options[i].OptionId)
 					optionObj.removeClass("Option");
@@ -246,6 +240,7 @@ var _Assessment = (function () {
 					questionObj.find(".question-band").append(optionObj)
 
 				}
+				//
 				var fdk = $(".questionfdk").clone();
 				fdk.removeClass("questionfdk");
 				fdk.html("<div>" + feedbacktext + "</div>");
@@ -256,10 +251,7 @@ var _Assessment = (function () {
 				$("#Summary").append(questionObj);
 
 				questionObj.find(".question-band label").css("position", "relative");
-				if (isFirefox) {
-				//	this.SetCustomarialabelforRadio();
-
-				}
+				
 				$("#Summary").find("input[type='radio']").prop("readonly", "readonly");
 				$("#Summary").find("input[type='radio']").k_disable();
 				if (isIE11version) {
@@ -268,6 +260,12 @@ var _Assessment = (function () {
 				}
 
 			}
+			
+			$("#Summary input[type='radio']").each(function(){$(this).unwrap()});
+			if (isIE11version) {
+				this.SetCustomarialabelforRadio();
+
+		     }
 			if (gRecordData.Status == "Started") {
 				gRecordData.Status = "Completed";
 				gRecordData.Score = score;
@@ -291,7 +289,8 @@ var _Assessment = (function () {
 			}
 		},
 		SetCustomarialabelforRadio: function () {
-			$("input[type='radio']").each(function () {
+			debugger;
+			$(".question-band input[type='radio']").each(function () {
 				var ischecked = "\n radio button unavailable"
 				if ($(this).prop("checked") == "true" || $(this).prop("checked") == true) {
 					ischecked = ischecked + " checked "
@@ -304,11 +303,13 @@ var _Assessment = (function () {
 					radioalabel = $(this).attr("aria-label");
 				}
 				else {
-					radioalabel = $(this).closest("div").find(".inpputtext").text();
+					radioalabel = $(this).next(".inpputtext").text();
 				}
 				radioalabel = ischecked + radioalabel;
-				$(this).closest("div").attr("aria-label", radioalabel);
-				$(this).closest("div").find("*").attr("aria-hidden", "true")
+				radioalabel = "<label class='accessibility'>"+radioalabel+"</label>";
+				$(this).prev(".iscorrect").before(radioalabel);
+				$(this).attr("aria-hidden", "true");
+				$(this).next().attr("aria-hidden", "true");
 
 			})
 		},
