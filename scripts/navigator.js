@@ -376,6 +376,7 @@ var _Navigator = (function () {
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
+                    $(".main-content").html("");
                     $(".main-content").load(pageUrl, function () {
                         $(this).fadeTo(600, 1)
                         if ($(".activityimg").length > 0) {
@@ -741,6 +742,9 @@ var _Navigator = (function () {
         GetPackageType: function () {
             return packageType;
         },
+        GetQuizPageId:function(){
+            return quizpageid;
+        }
     };
 })();
 

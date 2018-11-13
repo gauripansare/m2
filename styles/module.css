@@ -347,3 +347,15 @@
     opacity: 0;
 }
 /*presenter Mode css End*/
+
+
+/* IE10 and IE11  */
+
+@media all and (-ms-high-contrast:none){
+    .iscorrect { margin-top: 5px } /* IE10 */
+     *::-ms-backdrop, .iscorrect { margin-top: 5px }  /* IE11 */
+}
+
+@supports (-ms-accelerator:true) {
+	.iscorrect { margin-top: 5px } 
+}

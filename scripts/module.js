@@ -7,12 +7,24 @@ var isSafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 var isIEEdge = /Edge/.test(navigator.userAgent);
 var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
 var isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+var delay = 1000;
+if(iOS)
+{
+    delay =3000;
+}
 jQuery.fn.extend({
     k_enable: function () {
         return this.removeClass('disabled').attr("aria-disabled", "false").removeAttr("disabled");
     },
     k_disable: function () {
-        return this.addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+        this.addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
+        if(isIE11version)
+        {
+            if($(this).attr("type")!=undefined && $(this).attr("type") == "radio")
+                return;
+           $(this).removeAttr("disabled")
+        }
+        return;
     },
     k_IsDisabled: function () {
         if (this.hasClass('disabled')) { return true; } else { return false; }
@@ -512,7 +524,7 @@ var _ModuleCommon = (function () {
                 {
                     $("#div_feedback p:first").attr("role","text")
                 }
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
                     $("#div_feedback p:first").focus();
                 });
             });
@@ -543,7 +555,7 @@ var _ModuleCommon = (function () {
                 {
                     $("#div_feedback p:first").attr("role","text")
                 }
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, 1000, function () {
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
                     $("#div_feedback p:first").focus();
                 });
             });
