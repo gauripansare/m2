@@ -499,14 +499,7 @@ var _ModuleCommon = (function () {
             }
             _Navigator.GetBookmarkData();
         },
-        SetFeedbackTop: function () {
-            var ptop = Number($("#div_feedback").position().top);
-            var pheight = Number($("#div_feedback").outerHeight());
-            var pdiff = (_Settings.minHeight + _Settings.topMargin) - (ptop + pheight);
-            if (pdiff > 0) {
-                $("#div_feedback").css("margin-top", (pdiff + 35) + "px");
-            }
-        },
+       
         InputFeedback: function () {
 
             if (_Navigator.IsRevel()) {
@@ -518,15 +511,16 @@ var _ModuleCommon = (function () {
             $("#div_feedback").css("display", "inline-block");
 
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()   
+                
                 $("#div_feedback p:first").attr("tabindex", "-1")
                 if(iOS)
                 {
                     $("#div_feedback p:first").attr("role","text")
                 }
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                //$('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                    window.scrollTo(0,document.body.scrollHeight)
                     $("#div_feedback p:first").focus();
-                });
+                //});
             });
             $("input").k_disable();
             this.EnableNext();
@@ -549,21 +543,26 @@ var _ModuleCommon = (function () {
             $("#div_feedback").css("display", "inline-block");
 
             $("#div_feedback .div_fdkcontent").load(fdbkUrl, function () {
-                // this.SetFeedbackTop()   
+                
                 $("#div_feedback p:first").attr("tabindex", "-1")
                 if(iOS)
                 {
                     $("#div_feedback p:first").attr("role","text")
                 }
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                //$('html,body').animate({ scrollTop: document.body.scrollHeight }, delay, function () {
+                    window.scrollTo(0,document.body.scrollHeight)
                     $("#div_feedback p:first").focus();
-                });
+                //});
             });
             $(".divHotSpot").k_disable();
             this.EnableNext();
         },
         HotspotNext: function () {
-            _Navigator.Next();
+            if(isAndroid)
+            {
+                $("#progressdiv").focus();
+            }
+            _Navigator.Next();           
         },
         InputNext: function () {
             _Navigator.Next();

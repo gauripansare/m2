@@ -136,6 +136,7 @@ $(document).on('click', ".activityimg", function (event) {
 $(document).on('click', ".startbtn", function (event) {
     if ($(this).k_IsDisabled()) return;
     _Navigator.Next();
+    //_Navigator.LoadPage("p4");
 });
 $(document).on('click', ".reviewsubmit", function (event) {
     if ($(this).k_IsDisabled()) return;
@@ -216,7 +217,7 @@ window.addEventListener("scroll", function () {
         target.css({ "visibility": "visible", "top": "0px", "width": width + "px" })
     }
     else if (window.pageYOffset < $("#header-content").height() - 10) {
-        target.css({ "visibility": "hidden", "top": "-80px", })
+        target.css({ "visibility": "hidden", "top": "-80px"})
         $(".hintcontainerdoc").hide();
         $(".hintdoc").removeClass("expanded")
 

@@ -351,7 +351,7 @@ header {
     width: 135px;
 }
 
-.progressDiv {
+.progressdiv {
     float: left;
     width: 135px;
     /*border-right: #cccccc 2px solid;*/
@@ -433,5 +433,4 @@ header {
 .closehintdoc{
     margin-right:10px;
 }
-
 

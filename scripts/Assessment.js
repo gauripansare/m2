@@ -261,7 +261,7 @@ var _Assessment = (function () {
 
 			}
 			
-			$("#Summary input[type='radio']").each(function(){$(this).unwrap()});
+			//$("#Summary input[type='radio']").each(function(){$(this).unwrap()});
 			if (isIE11version) {
 				this.SetCustomarialabelforRadio();
 

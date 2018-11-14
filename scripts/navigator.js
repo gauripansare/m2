@@ -391,7 +391,7 @@ var _Navigator = (function () {
                                     $("#titleheader").focus();
                                 }
                                 else if (_currentPageId != quizpageid) {                                     if(isAndroid)
-                                    {
+                                    {                                       
                                         window.location.hash = '#progressdiv'
                                     }
                                     else
@@ -541,7 +541,7 @@ var _Navigator = (function () {
         UpdateProgressBar: function () {
             var progData = this.GetProgressData();
             var lprog_pecent = (progData * 100 / progressLevels[0]).toFixed(0);
-            $(".progressDiv").text("Progress: " + lprog_pecent + "%");
+            $(".progressdiv").text("Progress: " + lprog_pecent + "%");
             $(".progressFg").css("width", lprog_pecent + "%");
         },
         GetCurrentPage: function () {
