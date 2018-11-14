@@ -1,5 +1,7 @@
 var hotspotclicked = false;;
 var hotspot;
+var touchend = false;
+var touchend1 = false;
 $(document).on("click", ".divHotSpot", function (event) {
     if (_Navigator.IsPresenterMode()) {
         return;
@@ -28,7 +30,7 @@ $(document).on("click", "#linknext", function (event) {
     _Navigator.Next();
 });
 $(document).on("click", ".hintdoc", function (event) {
-    debugger;
+    
     if ($(this).hasClass("hintdoc")) {
         if ($(this).hasClass("expanded")) {
             $(this).removeClass("expanded")
@@ -42,11 +44,14 @@ $(document).on("click", ".hintdoc", function (event) {
 
         }
     }
+    if(touchend1){
+        $(this).mouseout();
+        touchend1 = false;
+    }
     event.preventDefault();
     return;
 });
 $(document).on("click", ".hintlink", function (event) {
-    debugger;
     if ($(this).k_IsDisabled()) return;
     var open = "open;"
     if ($(this).hasClass("expanded")) {
@@ -142,14 +147,26 @@ $(document).on('click', ".reviewsubmit", function (event) {
     if ($(this).k_IsDisabled()) return;
     _Navigator.Next();
 });
+
+
 $(document).on('touchstart', ".hintlink", function (event) {
     mouseenter($(this));
     touchend = false;
 });
-var touchend = false;
+
 $(document).on('touchend ', ".hintlink", function (event) {
     mouseleave($(this));
     touchend = true;
+});
+
+$(document).on('touchstart', ".hintdoc", function (event) {
+    mouseenter($(this));
+    touchend1 = false;
+});
+
+$(document).on('touchend ', ".hintdoc", function (event) {
+    mouseleave($(this));
+    touchend1 = true;
 });
 
 
@@ -208,7 +225,8 @@ window.onunload = function () {
 
 window.addEventListener("scroll", function () {
 
-    if (_Navigator.GetCurrentPage().pageId == "p1")
+    var currPage = _Navigator.GetCurrentPage();
+    if (currPage.pageId == "p1" )
         return;
     var target = $(".header-content-dock");
 
@@ -222,7 +240,7 @@ window.addEventListener("scroll", function () {
         $(".hintdoc").removeClass("expanded")
 
     }
-    if (_Navigator.GetCurrentPage().pageId == _Navigator.GetQuizPageId())
+    if (_Navigator.GetCurrentPage().pageId == _Navigator.GetQuizPageId() || currPage.hinturl ==undefined || currPage.hinturl == "" )
     {
         $(".hintdoc").parent().hide();
     }

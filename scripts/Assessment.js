@@ -255,8 +255,8 @@ var _Assessment = (function () {
 				$("#Summary").find("input[type='radio']").prop("readonly", "readonly");
 				$("#Summary").find("input[type='radio']").k_disable();
 				if (isIE11version) {
-					$("#Summary").find("input[type='radio']").removeAttr("aria-disabled");
-					//$("#Summary").find("input[type='radio']").removeAttr("disabled")
+				//	$("#Summary").find("input[type='radio']").removeAttr("aria-disabled");
+					
 				}
 
 			}
@@ -269,17 +269,16 @@ var _Assessment = (function () {
 			if (gRecordData.Status == "Started") {
 				gRecordData.Status = "Completed";
 				gRecordData.Score = score;
+				var perscore = gRecordData.Score / parseInt(gRecordData.AssessmentScore) * 100;	
+				$("#ScoreSummary").text("Score: " + perscore + "%");
 				this.SetScore(perscore);
 			}
-			else if(_Navigator.IsPresenterMode())
+			if(_Navigator.IsPresenterMode())
 			{
+				$("#ScoreSummary").text("Score: 100%");
 				gRecordData.Status = "Completed";
 			}
 			_Navigator.UpdateProgressBar();
-			var perscore = gRecordData.Score / parseInt(gRecordData.AssessmentScore) * 100;
-			
-			$("#ScoreSummary").text("Score: " + perscore + "%");
-
 			$("#progressdiv").focus();
 		},
 		SetScore: function (perscore) {
@@ -310,6 +309,7 @@ var _Assessment = (function () {
 				$(this).prev(".iscorrect").before(radioalabel);
 				$(this).attr("aria-hidden", "true");
 				$(this).next().attr("aria-hidden", "true");
+				$(this).attr("disabled","true")
 
 			})
 		},
