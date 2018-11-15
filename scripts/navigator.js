@@ -324,6 +324,7 @@ var _Navigator = (function () {
         },
         LoadPage: function (pageId, jsonObj) {
              $(".hintcontainer").hide()
+             $(".header-content-dock").css({"visibility":"hidden"});
             if (_Navigator.IsRevel() && _currentPageId !=undefined && _currentPageId !="") {
                LifeCycleEvents.OnUnloadFromPlayer()
             }
