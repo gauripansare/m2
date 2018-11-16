@@ -8,7 +8,6 @@ var _Navigator = (function () {
     var _currentPageObject = {};
     var progressLevels = [32];
     var totalsimscore = 18;
-    //var presentermode = false;
     var bookmarkpageid = "";
     var quizpageid = "p28";
     var _NData = {
@@ -383,8 +382,6 @@ var _Navigator = (function () {
                         if ($(".activityimg").length > 0) {
                             $('.activityimg').load(function () {
                                 OnPageLoad();
-                                //console.log("loaded"+_currentPageId)
-                              
                                 if (_Navigator.IsPresenterMode()) {
                                     _ModuleCommon.PresenterMode();
                                 }
@@ -397,11 +394,15 @@ var _Navigator = (function () {
                                     }
                                     else
                                     {
-                                        if(isiPhone)
+                                        if(isiPhone && _NData[_currentPageId].isLoaded !=undefined && _NData[_currentPageId].isLoaded == true)
                                         {
-                                            $("#progressdiv").attr("role","text")
+                                            $("h2").focus();  
                                         }
-                                        $("#progressdiv").focus();
+                                        else
+                                        {
+                                            $("#progressdiv").focus();
+                                        }
+                                        _NData[_currentPageId].isLoaded = true;
                                     }
                                    
                                 }
@@ -411,6 +412,7 @@ var _Navigator = (function () {
                         else
                         {
                             OnPageLoad();
+                            _NData[_currentPageId].isLoaded = true;
                         }
 
                         if (_currentPageId == quizpageid)//  change to assessment id
@@ -435,7 +437,7 @@ var _Navigator = (function () {
                         if ((/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))) {
                             $('#footer-navigation').css('display', 'table');
                         }
-
+                       
                         _Navigator.GetBookmarkData();
                     });
                 })
@@ -447,21 +449,7 @@ var _Navigator = (function () {
              }
 
         },
-        LoadDefaultQuestion: function () {
-            if (_currentPageObject.questions.length > 0) {
-                _questionId = 0;
-                _currentPageObject.questions[0].isQuestionVisit = true;
-                for (var i = 0; i < _currentPageObject.questions.length; i++) {
-                    if (_currentPageObject.questions[i].isCurrent) {
-                        _questionId = i;
-                    }
-                }
-                //second parameter is to disable question effect.
-                _Question.Load(_currentPageObject.questions[_questionId], {
-                    disableEffect: true
-                });
-            }
-        },
+        
         Prev: function () {
             if (_Navigator.IsRevel()) {
                 LifeCycleEvents.OnInteraction("Previous link click.")
@@ -499,9 +487,7 @@ var _Navigator = (function () {
 
                 }
 
-                else if (typeof (currentQuestionIndex) != 'undefined' && typeof (gRecordData.Questions) != 'undefined' && (currentQuestionIndex + 1) == gRecordData.Questions.length) {                  
-                    // Show review instruction
-
+                else if (typeof (currentQuestionIndex) != 'undefined' && typeof (gRecordData.Questions) != 'undefined' && (currentQuestionIndex + 1) == gRecordData.Questions.length) { 
                     $(".intro-content-question").hide();
                     $(".questionwrapper").hide();
                     currentQuestionIndex = currentQuestionIndex + 1;
@@ -510,7 +496,6 @@ var _Navigator = (function () {
                     $("#Summary").load("pagedata/Summary.htm", function () {
                         _Assessment.ShowSummary()
                         $("#linkprevious").k_enable();
-
                     })
                     $("#climate-deal").css("margin-left", "23%");
                     $("#linknext").k_disable();
