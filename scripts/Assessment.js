@@ -281,7 +281,7 @@ var _Assessment = (function () {
 				gRecordData.Status = "Completed";
 			}
 			_Navigator.UpdateProgressBar();
-			$("#progressdiv").focus();
+			$("h2").focus();
 		},
 		SetScore: function (perscore) {
 			if (_Navigator.IsScorm()) {
