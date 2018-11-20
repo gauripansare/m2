@@ -7,6 +7,8 @@ var isSafari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 var isIEEdge = /Edge/.test(navigator.userAgent);
 var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
 var isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
 var delay = 1000;
 if(iOS)
 {
@@ -545,10 +547,7 @@ var _ModuleCommon = (function () {
             this.EnableNext();
         },
         HotspotNext: function () {
-            if(isAndroid)
-            {
-                $("#progressdiv").focus();
-            }
+            
             _Navigator.Next();           
         },
         InputNext: function () {

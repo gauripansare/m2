@@ -393,7 +393,16 @@ var _Navigator = (function () {
                                     $("h2").focus();
                                 }
                                 else {
-                                    $("#progressdiv").focus();
+                                    //$(".header-informarion .hintlink").focus();
+                                    //$("h2").focus();
+                                    if (isChrome) {
+                                        $("h2").focus();
+                                    }
+                                    else {
+                                        $("#progressdiv").focus();
+                                    }
+                                    // setReader("progressdiv");
+
                                 }
                                 _NData[_currentPageId].isLoaded = true;
 
