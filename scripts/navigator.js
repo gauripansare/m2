@@ -395,7 +395,7 @@ var _Navigator = (function () {
                                 else {
                                     //$(".header-informarion .hintlink").focus();
                                     //$("h2").focus();
-                                    if (isChrome) {
+                                    if (isChrome && !isAndroid) {
                                         $("h2").focus();
                                     }
                                     else {
