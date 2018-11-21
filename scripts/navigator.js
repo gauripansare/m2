@@ -490,7 +490,14 @@ var _Navigator = (function () {
                     $("#Summary").show();
                     $("#Questioninfo").hide();
                     $("#Summary").load("pagedata/Summary.htm", function () {
-                        _Assessment.ShowSummary()
+                        _Assessment.ShowSummary();
+
+                        if (isChrome && !isAndroid) {
+                            $("h2").focus();
+                        }
+                        else {
+                            $("#progressdiv").focus();
+                        }
                         $("#linkprevious").k_enable();
                     })
                     $("#climate-deal").css("margin-left", "23%");
