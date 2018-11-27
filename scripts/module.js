@@ -78,6 +78,8 @@ var _ModuleCommon = (function () {
                         }
                     }
                 }
+                if(fdkurl!=undefined)
+                {
                 fdkurl = _Settings.dataRoot + "feedbackdata/" + fdkurl;
                 $("#div_feedback").show();
                 $("#div_feedback").css("display", "inline-block");
@@ -85,7 +87,7 @@ var _ModuleCommon = (function () {
                 $("#div_feedback .div_fdkcontent").load(fdkurl, function () {
                     $('html,body').animate({ scrollTop: 0 }, 0, function () { });
                 });
-
+                }
             }
 
         },

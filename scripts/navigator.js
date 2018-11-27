@@ -1,9 +1,7 @@
-﻿//var isscorm = false;
-//var isrevel = false;
-//This api will contain navigation logic and page load.
+﻿//This api will contain navigation logic and page load.
 //It will also handle the question navigation if the page is having multiple questions.
 var _Navigator = (function () {
-    var packageType = "";//presenter/scorm/revel
+    var packageType = "scorm";//presenter/scorm/revel
     var _currentPageId = "";
     var _currentPageObject = {};
     var progressLevels = [32];
