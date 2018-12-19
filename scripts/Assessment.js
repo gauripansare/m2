@@ -283,7 +283,13 @@ var _Assessment = (function () {
 				gRecordData.Status = "Completed";
 			}
 			_Navigator.UpdateProgressBar();
-			$("#progressdiv").focus();
+			if (isChrome && !isAndroid) {
+				$("h2").focus();
+			}
+			else{
+
+				$("#progressdiv").focus();
+			}
 		},
 		SetScore: function (perscore) {
 			if (_Navigator.IsScorm()) {

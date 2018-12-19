@@ -548,6 +548,7 @@ var _Navigator = (function () {
         UpdateProgressBar: function () {
             var progData = this.GetProgressData();
             var lprog_pecent = (progData * 100 / progressLevels[0]).toFixed(0);
+            $(".progressdiv").empty();
             $(".progressdiv").text("Progress: " + lprog_pecent + "%");
             $(".progressFg").css("width", lprog_pecent + "%");
         },
@@ -610,7 +611,7 @@ var _Navigator = (function () {
             return _NData[pageid].isLoaded != undefined && _NData[pageid].isLoaded ? true : false;
         },
         SetPresenterMode: function (val) {
-            presentermode = val;
+            packageType = val;
         },
         IsPresenterMode: function () {
             if (packageType == "presenter") {
@@ -676,6 +677,10 @@ var _Navigator = (function () {
         },
 
         SetBookMarkPage: function () {
+         if (!this.IsScorm() && !this.IsRevel())
+                return;
+            if (this.IsReviewMode())
+                return;
             if (this.IsScorm()) {
                 _ScormUtility.SetBookMark(bookmarkpageid);
             }

@@ -229,7 +229,7 @@ var _ModuleCommon = (function () {
                 rposX = (event.pageX - posX);
                 rposY = (event.pageY - posY);
             }
-            if (rposX < 0 || rposY < 0) {//gp if module is attmpted using accessibility
+            if (rposX < 0 || rposY < 0 || rposX == undefined || rposY == undefined) {//gp if module is attmpted using accessibility
                 rposX = hotspotObj.position().left + 20;
                 rposY = hotspotObj.position().top + 20;
             }
@@ -456,6 +456,8 @@ var _ModuleCommon = (function () {
         OrientationChange: function () {
 
             this.ApplycontainerWidth();
+            var target = $(".header-content-dock");
+            target.css({ "visibility": "hidden","top": "-80px"})
         },
         HotspotClick: function (_hotspot, event) {
             if (_Navigator.IsRevel()) {
