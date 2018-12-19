@@ -633,12 +633,18 @@ var _ModuleCommon = (function () {
             
         },
         AppendScormReviewFooter: function () {
+            $(".presentationModeFooter").html('Review Mode');
+            $("#header-progress .presentationModeFooter").show();           
+                
+                $("footer").show();
+                $("#linknext").k_enable();   
+            /*
             if ($(".ScormReviewFooter").length == 0) {
                 var str = '<div class="ScormReviewFooter"> Review Mode</div>';
                 $("footer").append($(str));
                 $("footer").show();
                 $("#linknext").k_enable();
-            }
+            }*/
         },
         AppendCss: function () {
             if (isIE11version) {
@@ -651,6 +657,8 @@ var _ModuleCommon = (function () {
         }
     }
 })();
+
+
 $(document).ready(function () {    
     _Navigator.Initialize();
     $('body').attr({ "id": "thebody", "onmousedown": "document.getElementById('thebody').classList.add('no-focus');", "onkeydown": "document.getElementById('thebody').classList.remove('no-focus');" })

@@ -311,6 +311,11 @@ var _Navigator = (function () {
         if (_Navigator.IsReviewMode()) {
             $("#linknext").k_enable();
             $(".start-btn").k_disable();
+        if (_Navigator.IsPresenterMode() || _Navigator.IsReviewMode()) {
+            if(isiPhone || isAndroid){
+                $("#header-progress .presentationModeFooter").hide();                        
+            }
+        }
         }
     }
     return {
@@ -390,7 +395,11 @@ var _Navigator = (function () {
                         $("footer").show();
                         $("#linknext").k_enable();
                     }
-                  
+                    if (_Navigator.IsReviewMode()) {
+                        $(".wrapper-img").prepend('<div class="presentationModeFooter" >Review Mode</div>')
+                        $("footer").show();
+                        $("#linknext").k_enable();
+                    }
                 });
             } else {
                 $(".main-content").fadeTo(250, 0.25, function () {
