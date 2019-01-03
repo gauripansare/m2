@@ -349,7 +349,7 @@ var _ModuleCommon = (function () {
                 $("#div_feedback").hide();
 
             }
-            if (_Navigator.IsAnswered() && !_Navigator.IsPresenterMode()) {
+            if (_Navigator.IsAnswered()) {
                 this.DisplayInstructorReviewMode();
                 $(".divHotSpot, .divHotSpotdbl").addClass('disabled').attr("aria-disabled", "true").attr("disabled", "disabled");
             }
@@ -397,6 +397,8 @@ var _ModuleCommon = (function () {
             }
         },
         PresenterMode: function () {
+            $("#linknext").k_enable();
+            /*
             var currentPageData = _Navigator.GetCurrentPage();
             var pageData = this.GetPageDetailData();
             var appendImage = $(".wrapperimage");
@@ -426,9 +428,10 @@ var _ModuleCommon = (function () {
                 $(".divHotSpot").addClass("disabled");
                 appendImage.append(_div);
             }
-            $("#linknext").k_enable();
+            
             _Navigator.SetPageStatus(true);
             _Navigator.UpdateProgressBar();
+            */
         },
         ApplycontainerWidth: function () {
 
