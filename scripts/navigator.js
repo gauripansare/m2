@@ -1,7 +1,7 @@
 ﻿//This api will contain navigation logic and page load.
 //It will also handle the question navigation if the page is having multiple questions.
 var _Navigator = (function () {
-    var packageType = "";//presenter/scorm/revel
+    var packageType = "scorm";//presenter/scorm/revel
     var isReviewMode = false;
     var _currentPageId = "";
     var _currentPageObject = {};
@@ -418,6 +418,13 @@ var _Navigator = (function () {
                                     _ModuleCommon.PresenterMode();
                                 }
                                 if (_currentPageObject.pageId == "p2") {
+                                    $("#titleheader").attr({tabindex: "-1", role: "heading"}).focus();
+                                }
+                                else{
+                                    $("h2:first").attr({tabindex: "-1", role: "heading"}).focus();
+                                }
+                                /*
+                                if (_currentPageObject.pageId == "p2") {
                                     $("#titleheader").focus();
                                 }
 
@@ -435,7 +442,7 @@ var _Navigator = (function () {
                                     }
                                     // setReader("progressdiv");
 
-                                }
+                                }*/
                                 _NData[_currentPageId].isLoaded = true;
 
                             });
@@ -455,13 +462,7 @@ if (Summarybookmark) {
                                 $("#Questioninfo").hide();
                                 $("#Summary").load("pagedata/Summary.htm", function () {
                                     _Assessment.ShowSummary();
-                                    if (isChrome && !isAndroid) {
-                                        $("h2.pageheading").attr("tabindex", "-1");
-                                        $("h2").focus();
-                                    }
-                                    else {
-                                        $("#progressdiv").focus();
-                                    }
+                                    $("h2:first").attr({tabindex: "-1", role: "heading"}).focus();
                                     $("#linkprevious").k_enable();
 
                                 })
@@ -470,8 +471,7 @@ if (Summarybookmark) {
                             }
                             else {
                                 _Assessment.ShowQuestion();
-                                $("h2.pageheading").attr("tabindex", "-1");
-                                $("h2").focus();
+                                $("h2:first").attr({tabindex: "-1", role: "heading"}).focus();
                             }
 
                         }
@@ -557,12 +557,7 @@ Summarybookmark = true;
                         _Navigator.GetBookmarkData();
                         _Assessment.ShowSummary();
 
-                        if (isChrome && !isAndroid) {
-                            $("h2").focus();
-                        }
-                        else {
-                            $("#progressdiv").focus();
-                        }
+                        $("h2:first").attr({tabindex: "-1", role: "heading"}).focus();
                         $("#linkprevious").k_enable();
                     })
                     $("#climate-deal").css("margin-left", "23%");
